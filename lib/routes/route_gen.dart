@@ -6,7 +6,7 @@ import 'package:movie/modules/authentication/pages/loginScreen.dart';
 import 'package:movie/modules/splash/pages/splashScreen.dart';
 
 import 'app_routes_name.dart';
-
+//
 class RouteGen {
   static Route<dynamic> onGenerateRoute(RouteSettings setting) {
     switch (setting.name) {
