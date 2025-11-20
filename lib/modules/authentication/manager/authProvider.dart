@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/Dialog/appDialogs.dart';
-import '../../../routes/app_routes_name.dart';
+import '../../../core/routes/app_routes_name.dart';
 import 'authService.dart';
 
 class AuthProvider extends ChangeNotifier {

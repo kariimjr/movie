@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:movie/core/AppColors/appColors.dart';
+
 import 'package:movie/modules/authentication/manager/authService.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/theme/app_colors.dart';
 import '../manager/authProvider.dart';
 
 class CreateAccountScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.secondaryColor,
+      backgroundColor: AppColors.secondaryColor,
       body: Padding(
         padding: EdgeInsetsGeometry.symmetric(vertical: 40,horizontal: 16),
         child: ChangeNotifierProvider(
@@ -233,7 +234,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         authProvider.CreateAcc(context);
 
                       },
-                      color: AppColor.primaryColor,
+                      color: AppColors.primaryColor,
                       minimumSize: Size(double.infinity, 50),
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       child: Text(

@@ -1,9 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:movie/modules/splash/pages/splashScreen.dart';
-import 'package:movie/routes/app_routes_name.dart';
-import 'package:movie/routes/route_gen.dart';
+import 'package:movie/modules/splash/pages/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'core/routes/app_routes_name.dart';
+import 'core/routes/route_gen.dart';
+import 'core/theme/app_theme.dart';
 import 'firebase_options.dart';
 
 
@@ -26,6 +27,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Splashscreen(),
       onGenerateRoute: RouteGen.onGenerateRoute,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.dark,
       initialRoute: RouteName.Splash,
     );
   }

@@ -1,10 +1,11 @@
 
 import 'package:flutter/material.dart';
-import 'package:movie/modules/Layout/pages/layoutScreen.dart';
+import 'package:movie/modules/Layout/pages/layout_screen.dart';
 import 'package:movie/modules/authentication/pages/createAccountScreen.dart';
 import 'package:movie/modules/authentication/pages/loginScreen.dart';
-import 'package:movie/modules/splash/pages/splashScreen.dart';
+import 'package:movie/modules/splash/pages/splash_screen.dart';
 
+import '../../modules/onboarding_screen/onboarding_screen.dart';
 import 'app_routes_name.dart';
 //
 class RouteGen {
@@ -33,6 +34,12 @@ class RouteGen {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return LayoutScreen();
+          },
+        );
+      case RouteName.Onboarding:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return OnboardingScreen();
           },
         );
 

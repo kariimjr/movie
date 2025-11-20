@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:movie/core/AppColors/appColors.dart';
 import 'package:movie/modules/authentication/manager/authProvider.dart';
 import 'package:movie/modules/authentication/manager/authService.dart';
-import 'package:movie/routes/app_routes_name.dart';
+
 import 'package:provider/provider.dart';
+
+import '../../../core/routes/app_routes_name.dart';
+import '../../../core/theme/app_colors.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -18,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppColor.secondaryColor,
+        backgroundColor: AppColors.secondaryColor,
         body: Padding(
           padding: EdgeInsetsGeometry.symmetric(vertical: 67, horizontal: 19),
           child: ChangeNotifierProvider(
@@ -163,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             onPressed: () {},
                             child: Text(
                               "Forget Password ?",
-                              style: TextStyle(color: AppColor.primaryColor),
+                              style: TextStyle(color: AppColors.primaryColor),
                             ),
                           ),
                         ],
@@ -172,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () {
                           authProvider.Login(context);
                         },
-                        color: AppColor.primaryColor,
+                        color: AppColors.primaryColor,
                         minimumSize: Size(double.infinity, 50),
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                         child: Text(
@@ -196,7 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             child: Text(
                               "Create One",
-                              style: TextStyle(color: AppColor.primaryColor),
+                              style: TextStyle(color: AppColors.primaryColor),
                             ),
                           ),
                         ],
