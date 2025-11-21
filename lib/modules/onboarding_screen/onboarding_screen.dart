@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movie/modules/onboarding_screen/view_model/view_model.dart';
 import 'package:movie/modules/onboarding_screen/widget/onboard_content.dart';
 import 'package:provider/provider.dart';
 
-import '../view_model/view_model.dart';
+
 
 class OnboardingScreen extends StatelessWidget {
   OnboardingScreen({super.key});

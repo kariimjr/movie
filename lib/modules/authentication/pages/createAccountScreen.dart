@@ -1,5 +1,7 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movie/core/constants/profileAvatar.dart';
 
 import 'package:movie/modules/authentication/manager/authService.dart';
 import 'package:provider/provider.dart';
@@ -15,8 +17,11 @@ class CreateAccountScreen extends StatefulWidget {
 }
 
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
+  bool showPassword=true;
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: AppColors.secondaryColor,
       body: Padding(
@@ -30,6 +35,21 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 child: Column(
                   spacing: 15,
                   children: [
+                    CarouselSlider.builder(
+                      carouselController: CarouselSliderController(),
+                      itemCount: AvatarData.Avtar.length,
+                      itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
+                          SizedBox(
+                            width: 100,
+                            height: 161,
+                            child: Image.asset(AvatarData.Avtar[itemIndex].images),
+                          ), options: CarouselOptions(
+
+                      aspectRatio: 16/9,
+                      viewportFraction: 0.8,
+                      initialPage: 2,
+                    ),
+                    ),
                     TextFormField(
                       controller: authProvider.nameController,
 
@@ -107,6 +127,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       ),
                     ),
                     TextFormField(
+                      obscureText: showPassword,
+
                       controller: authProvider.passwordController,
 
                       onTapOutside: (event) =>
@@ -136,7 +158,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         ),
 
                         prefixIcon: Icon(Icons.lock_open, color: Colors.white),
-                        suffixIcon: Icon(Icons.visibility_off, color: Colors.white),
                         hintText: "Password",
                         hintStyle: TextStyle(fontSize: 16, color: Colors.white),
                         focusedBorder: OutlineInputBorder(
@@ -146,6 +167,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       ),
                     ),
                     TextFormField(
+                      obscureText: showPassword,
+
                       controller: authProvider.rePasswordController,
                       validator: (value){
                         if(authProvider.rePasswordController.text != authProvider.passwordController.text){
@@ -181,7 +204,20 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         ),
 
                         prefixIcon: Icon(Icons.lock_open, color: Colors.white),
-                        suffixIcon: Icon(Icons.visibility_off, color: Colors.white),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            showPassword =! showPassword;
+                            setState(() {
+                            });
+                          },
+                          icon: showPassword ? Icon(
+                            Icons.visibility_off,
+                            color: Colors.white,
+                          ):Icon(
+                            Icons.visibility,
+                            color: Colors.white,
+                          ),
+                        ),
                         hintText: "Password",
                         hintStyle: TextStyle(fontSize: 16, color: Colors.white),
                         focusedBorder: OutlineInputBorder(

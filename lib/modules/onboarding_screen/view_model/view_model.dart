@@ -5,9 +5,9 @@ import 'package:movie/modules/Layout/pages/browse.dart';
 import 'package:movie/modules/Layout/pages/home.dart';
 import 'package:movie/modules/Layout/pages/profile.dart';
 import 'package:movie/modules/Layout/pages/search.dart';
-import '../../core/constants/onboarding_data.dart';
+import '../../../core/constants/onboarding_data.dart';
 
-import '../onboarding_screen/widget/onboard_content.dart';
+import '../widget/onboard_content.dart';
 
 class ViewModel extends ChangeNotifier {
   final PageController pageController = PageController();

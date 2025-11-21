@@ -6,9 +6,9 @@ import 'core/routes/app_routes_name.dart';
 import 'core/routes/route_gen.dart';
 import 'core/theme/app_theme.dart';
 import 'firebase_options.dart';
+
+
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
-
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();

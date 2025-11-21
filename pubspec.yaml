@@ -41,6 +41,7 @@ dependencies:
   cloud_firestore:
   flutter_svg: ^2.2.2
   dio: ^5.9.0
+  carousel_slider:
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,7 @@ flutter:
     - assets/images/
 #    - assets/logo/
     - assets/icons/
+    - assets/avatars/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

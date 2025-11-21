@@ -41,7 +41,6 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> Login(BuildContext context) async {
-    print("kkkkkkkkkkkkkk");
     isLoading = true;
     notifyListeners();
     if (!formKey.currentState!.validate()) return;

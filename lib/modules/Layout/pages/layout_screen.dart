@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movie/modules/Layout/pages/profile.dart';
 import 'package:movie/modules/Layout/pages/search.dart';
-import 'package:movie/modules/view_model/view_model.dart';
 import 'package:provider/provider.dart';
 
+import '../../onboarding_screen/view_model/view_model.dart';
 import 'browse.dart';
 import 'home.dart';
 

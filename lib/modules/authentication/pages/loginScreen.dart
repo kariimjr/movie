@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movie/core/theme/app_theme.dart';
+import 'package:movie/core/widgets/custom_btn.dart';
 import 'package:movie/modules/authentication/manager/authProvider.dart';
 import 'package:movie/modules/authentication/manager/authService.dart';
 
@@ -16,10 +18,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool showPassword=true;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: AppColors.secondaryColor,
         body: Padding(
           padding: EdgeInsetsGeometry.symmetric(vertical: 67, horizontal: 19),
@@ -30,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 return Form(
                   key: authProvider.formKey,
                   child: Column(
-                    spacing: 10,
+                    spacing: 17,
                     children: [
                       Image.asset(
                         "assets/images/logo.png",
@@ -38,125 +43,143 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 118,
                         fit: BoxFit.contain,
                       ),
-                      TextFormField(
-                        controller: authProvider.emailController,
-                        onTapOutside: (event) =>
-                            FocusManager.instance.primaryFocus?.unfocus(),
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                        decoration: InputDecoration(
-                          filled: true,
-                          focusColor: Color(0xff282A28),
-                          fillColor: Color(0xff282A28),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: Color(0xff282A28),
+                      Spacer(),
+                      Column(
+                        spacing: 22,
+                        children: [
+                          TextFormField(
+                            controller: authProvider.emailController,
+                            onTapOutside: (event) =>
+                                FocusManager.instance.primaryFocus?.unfocus(),
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                            decoration: InputDecoration(
+                              filled: true,
+                              focusColor: Color(0xff282A28),
+                              fillColor: Color(0xff282A28),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Color(0xff282A28),
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Colors.redAccent,
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Color(0xff282A28),
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Color(0xff282A28),
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+
+                              prefixIcon: Icon(
+                                Icons.email_outlined,
+                                color: Colors.white,
+                              ),
+                              hintText: "Email",
+                              hintStyle: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Color(0xff282A28),
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
                             ),
-                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          TextFormField(
+                            obscureText: showPassword,
+                            controller: authProvider.passwordController,
+                            onTapOutside: (event) =>
+                                FocusManager.instance.primaryFocus?.unfocus(),
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                            decoration: InputDecoration(
+                              filled: true,
+                              focusColor: Color(0xff282A28),
+                              fillColor: Color(0xff282A28),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Color(0xff282A28),
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Colors.redAccent,
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Color(0xff282A28),
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Color(0xff282A28),
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+
+                              prefixIcon: Icon(
+                                Icons.lock_open,
+                                color: Colors.white,
+                              ),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  showPassword =! showPassword;
+                                  setState(() {
+                                  });
+                                },
+                                icon: showPassword ? Icon(
+                                  Icons.visibility_off,
+                                  color: Colors.white,
+                                ):Icon(
+                                  Icons.visibility,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              hintText: "Password",
+                              hintStyle: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Color(0xff282A28),
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                            ),
                           ),
 
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: Colors.redAccent,
-                            ),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: Color(0xff282A28),
-                            ),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: Color(0xff282A28),
-                            ),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-
-                          prefixIcon: Icon(
-                            Icons.email_outlined,
-                            color: Colors.white,
-                          ),
-                          hintText: "Email",
-                          hintStyle: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: Color(0xff282A28),
-                            ),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                        ),
-                      ),
-                      TextFormField(
-                        controller: authProvider.passwordController,
-                        onTapOutside: (event) =>
-                            FocusManager.instance.primaryFocus?.unfocus(),
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                        decoration: InputDecoration(
-                          filled: true,
-                          focusColor: Color(0xff282A28),
-                          fillColor: Color(0xff282A28),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: Color(0xff282A28),
-                            ),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: Colors.redAccent,
-                            ),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: Color(0xff282A28),
-                            ),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: Color(0xff282A28),
-                            ),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-
-                          prefixIcon: Icon(
-                            Icons.lock_open,
-                            color: Colors.white,
-                          ),
-                          suffixIcon: Icon(
-                            Icons.visibility_off,
-                            color: Colors.white,
-                          ),
-                          hintText: "Password",
-                          hintStyle: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: Color(0xff282A28),
-                            ),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                        ),
+                        ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -165,29 +188,30 @@ class _LoginScreenState extends State<LoginScreen> {
                             onPressed: () {},
                             child: Text(
                               "Forget Password ?",
-                              style: TextStyle(color: AppColors.primaryColor),
+                              style: AppTheme.darkTheme.textTheme.bodySmall
+                                  ?.copyWith(
+                                fontSize: 15,
+                                color: AppColors.primaryColor,
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      CupertinoButton(
+
+                      CustomBut(
                         onPressed: () {
                           authProvider.Login(context);
                         },
-                        color: AppColors.primaryColor,
-                        minimumSize: Size(double.infinity, 50),
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        child: Text(
-                          "Login",
-                          style: TextStyle(color: Colors.black, fontSize: 20),
-                        ),
+                        text: "Login",
+                        isLoading: authProvider.isLoading,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             "Don’t Have Account ?",
-                            style: TextStyle(color: Colors.white),
+                            style: AppTheme.darkTheme.textTheme.bodySmall
+                                ?.copyWith(fontSize: 19),
                           ),
                           TextButton(
                             onPressed: () {
@@ -198,11 +222,43 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             child: Text(
                               "Create One",
-                              style: TextStyle(color: AppColors.primaryColor),
+                              style: AppTheme.darkTheme.textTheme.bodySmall
+                                  ?.copyWith(
+                                    fontSize: 19,
+                                    color: AppColors.primaryColor,
+                                  ),
                             ),
                           ),
                         ],
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 100,
+                            child: Divider(
+                              thickness: 1,
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                          Text("       OR     ",style: AppTheme.darkTheme.textTheme.bodySmall,),
+                          SizedBox(
+                            width: 100,
+                            child: Divider(
+                              thickness: 1,
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      CustomBut(
+                        onPressed: () {
+                          authProvider.Login(context);
+                        },
+                        text: "Login With Google",
+                        isLoading: false,
+                      ),
+                      Spacer()
                     ],
                   ),
                 );

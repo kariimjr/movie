@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/core/extensions/extension.dart';
 import 'package:provider/provider.dart';
+import '../../../core/routes/app_routes_name.dart';
 
 import '../../../core/widgets/custom_btn.dart';
-import '../../view_model/view_model.dart';
+import '../view_model/view_model.dart';
 
 class OnboardContent extends StatelessWidget {
   const OnboardContent({super.key});
@@ -36,9 +37,13 @@ class OnboardContent extends StatelessWidget {
           ),
           SizedBox(height: 24),
           CustomBut(
+            isLoading: false,
             onPressed: () async {
               await viewModel.getNextCard();
               await Future.delayed(Duration(milliseconds: 100));
+              if(viewModel.isLast){
+                Navigator.pushNamed(context,RouteName.Login );
+              }
             },
             text: viewModel.isFirst
                 ? 'Explore Now'
@@ -50,6 +55,8 @@ class OnboardContent extends StatelessWidget {
             children: [
               SizedBox(height: 16,),
               CustomBut(
+                isLoading: false,
+
                 onPressed: () async {
                   await viewModel.getPreviousCard();
                 },
