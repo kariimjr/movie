@@ -5,6 +5,8 @@ class authService {
     required String Name,
     required String Email,
     required String Password,
+    required String Phone,
+    required String Avatar,
   }) async {
     try {
       final credential = await FirebaseAuth.instance
@@ -12,6 +14,7 @@ class authService {
       await credential.user?.updateProfile(displayName: Name);
       await credential.user?.sendEmailVerification();
       await credential.user?.updateDisplayName(Name);
+      await credential.user?.updatePhotoURL(Avatar);
       await credential.user?.reload();
       print("${credential.user!.displayName}");
 

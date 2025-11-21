@@ -1,9 +1,10 @@
+import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movie/core/theme/app_theme.dart';
 import 'package:movie/core/widgets/custom_btn.dart';
 import 'package:movie/modules/authentication/manager/authProvider.dart';
-import 'package:movie/modules/authentication/manager/authService.dart';
 
 import 'package:provider/provider.dart';
 
@@ -87,10 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 borderRadius: BorderRadius.circular(16),
                               ),
 
-                              prefixIcon: Icon(
-                                Icons.email_outlined,
-                                color: Colors.white,
-                              ),
+                              prefixIcon:SvgPicture.asset("assets/icons/authIcons/email.svg",),
                               hintText: "Email",
                               hintStyle: TextStyle(
                                 fontSize: 16,
@@ -146,10 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 borderRadius: BorderRadius.circular(16),
                               ),
 
-                              prefixIcon: Icon(
-                                Icons.lock_open,
-                                color: Colors.white,
-                              ),
+                              prefixIcon: SvgPicture.asset("assets/icons/authIcons/password.svg"),
                               suffixIcon: IconButton(
                                 onPressed: () {
                                   showPassword =! showPassword;
@@ -225,6 +220,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: AppTheme.darkTheme.textTheme.bodySmall
                                   ?.copyWith(
                                     fontSize: 19,
+                                    fontWeight: FontWeight.w600,
                                     color: AppColors.primaryColor,
                                   ),
                             ),
@@ -258,7 +254,26 @@ class _LoginScreenState extends State<LoginScreen> {
                         text: "Login With Google",
                         isLoading: false,
                       ),
-                      Spacer()
+                      Spacer(),
+                      AnimatedToggleSwitch<String>.rollingByHeight(
+                        textDirection: TextDirection.ltr,
+
+                        current:"ar",
+                        values: ["en", "ar"],
+                        iconList: [
+                          Image.asset('assets/icons/authIcons/USA.png'),
+                          Image.asset('assets/icons/authIcons/EG.png'),
+                        ],
+                        style: ToggleStyle(
+                          indicatorColor: AppColors.primaryColor,
+                          borderColor: AppColors.primaryColor,
+                          backgroundColor: Colors.transparent,
+                        ),
+                        borderWidth: 1,
+                        indicatorIconScale: 0.9,
+
+                      ),
+
                     ],
                   ),
                 );

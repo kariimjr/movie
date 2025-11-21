@@ -1,11 +1,15 @@
 
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/Dialog/appDialogs.dart';
 import '../../../core/routes/app_routes_name.dart';
 import 'authService.dart';
+import 'package:movie/core/constants/profileAvatar.dart';
+
 
 class AuthProvider extends ChangeNotifier {
+  int avatarIndex=0;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -23,6 +27,8 @@ class AuthProvider extends ChangeNotifier {
           Name: nameController.text,
           Email: emailController.text,
           Password: passwordController.text,
+          Phone: phoneController.text,
+          Avatar: AvatarData.Avtar[avatarIndex].images,
         );
 
         if (data != null) {
@@ -71,5 +77,6 @@ class AuthProvider extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
   }
+
 
 }
