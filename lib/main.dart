@@ -6,6 +6,7 @@ import 'core/routes/app_routes_name.dart';
 import 'core/routes/route_gen.dart';
 import 'core/theme/app_theme.dart';
 import 'firebase_options.dart';
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 
 
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Splashscreen(),
+      navigatorKey: navigatorKey,
       onGenerateRoute: RouteGen.onGenerateRoute,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.dark,
