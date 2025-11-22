@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie/modules/Layout/pages/layout_screen.dart';
 import 'package:movie/modules/authentication/pages/createAccountScreen.dart';
-import 'package:movie/modules/authentication/pages/loginScreen.dart';
+import 'package:movie/modules/authentication/pages/login_screen.dart';
 import 'package:movie/modules/splash/pages/splash_screen.dart';
 
 import '../../modules/onboarding_screen/onboarding_screen.dart';

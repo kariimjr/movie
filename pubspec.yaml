@@ -43,6 +43,8 @@ dependencies:
   dio: ^5.9.0
   carousel_slider:
   animated_toggle_switch:
+  flutter_bloc:
+  cached_network_image: ^3.4.1
 
 
 dev_dependencies:

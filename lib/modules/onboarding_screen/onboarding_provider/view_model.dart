@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/modules/Layout/pages/browse.dart';
-import 'package:movie/modules/Layout/pages/home.dart';
+import 'package:movie/modules/Layout/pages/home/home.dart';
 import 'package:movie/modules/Layout/pages/profile.dart';
 import 'package:movie/modules/Layout/pages/search.dart';
 import '../../../core/constants/onboarding_data.dart';
@@ -17,16 +17,10 @@ class ViewModel extends ChangeNotifier {
   var onboardingData = OnboardingData.onboardingData;
   GlobalKey<ScaffoldState>? scaffoldKey;
 
-  int navIndex = 0;
   int pageViewIndex = 0;
   bool isFirst = true;
   bool isLast = true;
-  List<Widget> screens = [Home(), Search(), Browse(), Profile()];
 
-  void onNavTap(int index) {
-    navIndex = index;
-    notifyListeners();
-  }
 
   Future<void> onPageChange(int index, BuildContext context) async{
     pageViewIndex = index;

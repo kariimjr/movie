@@ -23,23 +23,50 @@ class ApiManager {
     )
   );
 
-  Future<List<Movies>> getMovies() async{
-    try{
-      var response = await _dio.get("list_movies");
-      List<Movies> movies = [];
-      if(response.statusCode == 200){
-        var data = response.data["movies"];
-        for(var e in data){
-          movies.add(e);
+  Future<List<Movies>> getMovies() async {
+    try {
+      var response = await _dio.get("list_movies.json");
+      if (response.statusCode == 200) {
+        List<Movies> movies = [];
+        var data = response.data["data"]["movies"];
+        for (var e in data) {
+          movies.add(Movies.fromJson(e));
         }
-        return movies ?? [];
-      }else{
+        return movies;
+      } else {
         throw response.data;
       }
-    }catch(e, s){
+    } catch (e, s) {
       print(e);
       print(s);
       rethrow;
     }
   }
+  Future<Set<String>> getMoviesGenres() async {
+    try {
+      var response = await _dio.get("list_movies.json");
+      if (response.statusCode == 200) {
+        Set<String> genres = {};
+        var movies = response.data["data"]["movies"];
+
+        for (var movie in movies) {
+          if (movie['genres'] != null) {
+            for (var genre in movie['genres']) {
+              genres.add(genre);
+            }
+          }
+        }
+
+        return genres;
+      } else {
+        throw response.data;
+      }
+    } catch (e, s) {
+      print(e);
+      print(s);
+      rethrow;
+    }
+  }
+
+
 }

@@ -21,7 +21,7 @@ class Splashscreen extends StatelessWidget {
                 child: FadeInUp(
                   duration: Duration(seconds: 2),
                   onFinish: (direction) {
-                    Navigator.pushReplacementNamed(context, RouteName.Onboarding);
+                    Navigator.pushReplacementNamed(context, RouteName.Layout);
                   },
                   child: Image.asset(
                     "assets/images/logo.png",

@@ -12,6 +12,50 @@ abstract class AppTheme {
       surface: AppColors.secondaryColor,
     ),
 
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      focusColor: AppColors.accentColor,
+      fillColor: AppColors.accentColor,
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          width: 1,
+          color: Color(0xff282A28),
+        ),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          width: 1,
+          color: Colors.redAccent,
+        ),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      border: OutlineInputBorder(
+        borderSide: BorderSide(
+          width: 1,
+          color: Color(0xff282A28),
+        ),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          width: 1,
+          color: Color(0xff282A28),
+        ),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          width: 1,
+          color: Color(0xff282A28),
+        ),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      hintStyle: TextStyle(
+        fontSize: 16,
+        color: Colors.white,
+      ),
+    ),
     bottomSheetTheme: BottomSheetThemeData(
       backgroundColor: AppColors.secondaryColor,
 
@@ -49,6 +93,11 @@ abstract class AppTheme {
         color: Colors.white,
         fontWeight: FontWeight.w400,
         fontSize: 20,
+      ),
+      labelSmall: TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.w400,
+        fontSize: 18,
       ),
     ),
   );

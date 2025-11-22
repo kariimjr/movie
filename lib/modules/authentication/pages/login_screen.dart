@@ -19,7 +19,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool showPassword=true;
+  bool showPassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -54,53 +54,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                 FocusManager.instance.primaryFocus?.unfocus(),
                             style: TextStyle(fontSize: 16, color: Colors.white),
                             decoration: InputDecoration(
-                              filled: true,
-                              focusColor: Color(0xff282A28),
-                              fillColor: Color(0xff282A28),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 1,
-                                  color: Color(0xff282A28),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: SvgPicture.asset(
+                                  "assets/icons/email.svg",
+                                  width: 24,
+                                  height: 24,
+                                  colorFilter: ColorFilter.mode(
+                                    Colors.white,
+                                    BlendMode.srcIn,
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.circular(16),
                               ),
-
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 1,
-                                  color: Colors.redAccent,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 1,
-                                  color: Color(0xff282A28),
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 1,
-                                  color: Color(0xff282A28),
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-
-                              prefixIcon:SvgPicture.asset("assets/icons/authIcons/email.svg",),
                               hintText: "Email",
-                              hintStyle: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 1,
-                                  color: Color(0xff282A28),
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
                             ),
                           ),
                           TextFormField(
@@ -110,70 +76,36 @@ class _LoginScreenState extends State<LoginScreen> {
                                 FocusManager.instance.primaryFocus?.unfocus(),
                             style: TextStyle(fontSize: 16, color: Colors.white),
                             decoration: InputDecoration(
-                              filled: true,
-                              focusColor: Color(0xff282A28),
-                              fillColor: Color(0xff282A28),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 1,
-                                  color: Color(0xff282A28),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: SvgPicture.asset(
+                                  "assets/icons/password.svg",
+                                  width: 30,
+                                  height: 30,
+                                  colorFilter: ColorFilter.mode(
+                                    Colors.white,
+                                    BlendMode.srcIn,
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.circular(16),
                               ),
-
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 1,
-                                  color: Colors.redAccent,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 1,
-                                  color: Color(0xff282A28),
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 1,
-                                  color: Color(0xff282A28),
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-
-                              prefixIcon: SvgPicture.asset("assets/icons/authIcons/password.svg"),
                               suffixIcon: IconButton(
                                 onPressed: () {
-                                  showPassword =! showPassword;
-                                  setState(() {
-                                  });
+                                  showPassword = !showPassword;
+                                  setState(() {});
                                 },
-                                icon: showPassword ? Icon(
-                                  Icons.visibility_off,
-                                  color: Colors.white,
-                                ):Icon(
-                                  Icons.visibility,
-                                  color: Colors.white,
-                                ),
+                                icon: showPassword
+                                    ? Icon(
+                                        Icons.visibility_off,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.visibility,
+                                        color: Colors.white,
+                                      ),
                               ),
                               hintText: "Password",
-                              hintStyle: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 1,
-                                  color: Color(0xff282A28),
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
                             ),
                           ),
-
                         ],
                       ),
                       Row(
@@ -185,9 +117,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               "Forget Password ?",
                               style: AppTheme.darkTheme.textTheme.bodySmall
                                   ?.copyWith(
-                                fontSize: 15,
-                                color: AppColors.primaryColor,
-                              ),
+                                    fontSize: 15,
+                                    color: AppColors.primaryColor,
+                                  ),
                             ),
                           ),
                         ],
@@ -237,7 +169,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: AppColors.primaryColor,
                             ),
                           ),
-                          Text("       OR     ",style: AppTheme.darkTheme.textTheme.bodySmall,),
+                          Text(
+                            "       OR     ",
+                            style: AppTheme.darkTheme.textTheme.bodySmall,
+                          ),
                           SizedBox(
                             width: 100,
                             child: Divider(
@@ -258,22 +193,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       AnimatedToggleSwitch<String>.rollingByHeight(
                         textDirection: TextDirection.ltr,
 
-                        current:"ar",
+                        current: "ar",
                         values: ["en", "ar"],
                         iconList: [
-                          Image.asset('assets/icons/authIcons/USA.png'),
-                          Image.asset('assets/icons/authIcons/EG.png'),
+                          Image.asset('assets/icons/USA.png', fit: BoxFit.fill,),
+                          Image.asset('assets/icons/EG.png', fit: BoxFit.fill,),
                         ],
                         style: ToggleStyle(
                           indicatorColor: AppColors.primaryColor,
                           borderColor: AppColors.primaryColor,
                           backgroundColor: Colors.transparent,
+
                         ),
                         borderWidth: 1,
                         indicatorIconScale: 0.9,
-
                       ),
-
                     ],
                   ),
                 );

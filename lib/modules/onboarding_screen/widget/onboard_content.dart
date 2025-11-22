@@ -5,7 +5,8 @@ import 'package:provider/provider.dart';
 import '../../../core/routes/app_routes_name.dart';
 
 import '../../../core/widgets/custom_btn.dart';
-import '../view_model/view_model.dart';
+import '../onBoarding_provider/view_model.dart';
+
 
 class OnboardContent extends StatelessWidget {
   const OnboardContent({super.key});
