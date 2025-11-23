@@ -1,0 +1,40 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:movie/core/routes/app_routes_name.dart';
+import 'package:movie/modules/Layout/pages/Profile/manager/profileService.dart';
+
+import '../../../../../core/Dialog/appDialogs.dart';
+
+class ProfileProvider extends ChangeNotifier {
+  bool isLoading = false;
+
+  Future<void> deleteAccount(BuildContext context) async {
+    isLoading = true;
+    notifyListeners();
+
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).delete();
+
+        await user.delete();
+
+        Navigator.pushReplacementNamed(context, RouteName.Login);
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error deleting account: Please re-Login')),
+
+      );
+      Future.delayed(Duration(milliseconds: 2),() {
+        Navigator.pushReplacementNamed(context, RouteName.Login);
+      },);
+
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+}

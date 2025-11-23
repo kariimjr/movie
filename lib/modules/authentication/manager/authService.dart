@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -17,9 +18,11 @@ class authService {
       await credential.user?.updateDisplayName(Name);
       await credential.user?.updatePhotoURL(Avatar);
       await credential.user?.reload();
-      print("${credential.user!.displayName}");
 
       return credential;
+
+
+
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw 'The password provided is too weak.';
@@ -65,6 +68,24 @@ class authService {
       print (e);
     }
   }
-
-
+  static Future<void> saveUserData({
+    required String uid,
+    required String Name,
+    required String Email,
+    required String Phone,
+    required String Avatar,
+  }) async {
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(uid).set({
+        'name': Name,
+        'email': Email,
+        'phone': Phone,
+        'avatar': Avatar,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+    } catch (e) {
+      print('Error saving user data: $e');
+      throw 'Failed to save user data';
+    }
+  }
 }

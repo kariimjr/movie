@@ -20,7 +20,11 @@ class AuthProvider extends ChangeNotifier {
   Future<void> CreateAcc(BuildContext context) async {
     isLoading = true;
     notifyListeners();
-    if (formKey.currentState!.validate()) {
+    if (!formKey.currentState!.validate()){
+    }
+    {
+      isLoading = true;
+      notifyListeners();
       try {
         var data = await authService.CreateAccount(
           Name: nameController.text,
@@ -29,8 +33,14 @@ class AuthProvider extends ChangeNotifier {
           Phone: phoneController.text,
           Avatar: AvatarData.Avtar[avatarIndex].images,
         );
-
-        if (data != null) {
+        if (data != null && data.user != null) {
+          await authService.saveUserData(
+            uid: data.user!.uid,
+            Name: nameController.text,
+            Email: emailController.text,
+            Phone: phoneController.text,
+            Avatar: AvatarData.Avtar[avatarIndex].images,
+          );
           AppDialog.showMessage(
             "Welcome to Movie",
             context,
@@ -49,12 +59,10 @@ class AuthProvider extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     if (!formKey.currentState!.validate())
-      {
-        isLoading = false;
-        notifyListeners();
-        return;
-
-      }
+    {
+    }
+    isLoading = true;
+    notifyListeners();
     try {
       final user = await authService.Login(
         Email: emailController.text.trim(),
@@ -83,14 +91,14 @@ class AuthProvider extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     try {
-       await authService.ForgetPassword(
+      await authService.ForgetPassword(
         Email: emailController.text.trim(),
       );
-        AppDialog.showMessage(
-          "Email Send Successfully",
-          context,
-          type: DialogType.success,
-        );
+      AppDialog.showMessage(
+        "Email Send Successfully",
+        context,
+        type: DialogType.success,
+      );
 
     } catch (e) {
       AppDialog.showMessage(

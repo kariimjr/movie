@@ -5,6 +5,7 @@ import 'package:movie/core/constants/profileAvatar.dart';
 import 'package:provider/provider.dart';
 import '../../../core/routes/app_routes_name.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/widgets/custom_btn.dart';
 import '../manager/authProvider.dart';
 
 class CreateAccountScreen extends StatefulWidget {
@@ -64,7 +65,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           enlargeCenterPage: true,
                           aspectRatio: 16 / 9,
                           viewportFraction: 0.5,
-                          initialPage: 4,
+                          initialPage: 0,
                           enlargeFactor: 0.5,
                         ),
                       ),
@@ -216,19 +217,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                   hintText: "Phone Number",
                                 ),
                               ),
-                              CupertinoButton(
-                                onPressed: () async{
-                                  await authProvider.CreateAcc(context).then((value) {
-                                    return Navigator.pushReplacementNamed(context, RouteName.Login);
-                                  },);
+                              CustomBut(
+                                onPressed: () {
+                                  authProvider.CreateAcc(context);
                                 },
-                                color: AppColors.primaryColor,
-                                minimumSize: Size(double.infinity, 50),
-                                borderRadius: BorderRadius.all(Radius.circular(20)),
-                                child: Text(
-                                  "Create Account",
-                                  style: TextStyle(color: Colors.black, fontSize: 20),
-                                ),
+                                text: "Create Account",
+                                isLoading: authProvider.isLoading,
                               ),
                             ],
                           ),
