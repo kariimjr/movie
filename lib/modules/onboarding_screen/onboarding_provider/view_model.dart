@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/modules/Layout/pages/browse.dart';
 import 'package:movie/modules/Layout/pages/home/home.dart';
-import 'package:movie/modules/Layout/pages/profile.dart';
+import 'package:movie/modules/Layout/pages/Profile/profile.dart';
 import 'package:movie/modules/Layout/pages/search.dart';
 import '../../../core/constants/onboarding_data.dart';
 

@@ -2,11 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/core/constants/profileAvatar.dart';
-
-import 'package:movie/modules/authentication/manager/authService.dart';
 import 'package:provider/provider.dart';
-
-import '../../../core/extensions/extension.dart';
 import '../../../core/routes/app_routes_name.dart';
 import '../../../core/theme/app_colors.dart';
 import '../manager/authProvider.dart';
@@ -24,13 +20,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.secondaryColor,
       appBar: AppBar(
         backgroundColor: AppColors.secondaryColor,
-        centerTitle: true,
         title: Text(
           "Register",
-          style: TextStyle(color: AppColors.primaryColor),
+
         ),
         iconTheme: IconThemeData(color: AppColors.primaryColor),
       ),
@@ -85,124 +79,63 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                             children: [
 
                               TextFormField(
+                                validator: (value){
+                                  if(value==null||value.isEmpty){
+                                    return "Please Enter Your Name";
+                                  }
+                                  return null;
+                                },
                                 controller: authProvider.nameController,
-
                                 onTapOutside: (event) =>
                                     FocusManager.instance.primaryFocus?.unfocus(),
                                 style: TextStyle(fontSize: 16, color: Colors.white),
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  focusColor: Color(0xff282A28),
-                                  fillColor: Color(0xff282A28),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Colors.redAccent,
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-
+                                decoration:
+                                InputDecoration(
                                   prefixIcon: Icon(
                                     Icons.person_2_outlined,
                                     color: Colors.white,
                                   ),
                                   hintText: "Name",
-                                  hintStyle: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
                                 ),
                               ),
                               TextFormField(
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return "Email is required"; // ← This shows as error
+                                  }
+                                  if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
+                                    return "Enter a valid email";
+                                  }
+                                  return null;
+                                },
                                 controller: authProvider.emailController,
 
                                 onTapOutside: (event) =>
                                     FocusManager.instance.primaryFocus?.unfocus(),
                                 style: TextStyle(fontSize: 16, color: Colors.white),
                                 decoration: InputDecoration(
-                                  filled: true,
-                                  focusColor: Color(0xff282A28),
-                                  fillColor: Color(0xff282A28),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
 
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Colors.redAccent,
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
 
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
+
 
                                   prefixIcon: Icon(
                                     Icons.email_outlined,
                                     color: Colors.white,
                                   ),
                                   hintText: "Email",
-                                  hintStyle: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
                                 ),
                               ),
                               TextFormField(
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return "Password is required";
+                                  }
+                                  if (value.length < 6) {
+                                    return "Password must be at least 6 characters";
+                                  }
+                                  return null;
+                                },
+
                                 obscureText: showPassword,
 
                                 controller: authProvider.passwordController,
@@ -211,59 +144,18 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                     FocusManager.instance.primaryFocus?.unfocus(),
                                 style: TextStyle(fontSize: 16, color: Colors.white),
                                 decoration: InputDecoration(
-                                  filled: true,
-                                  focusColor: Color(0xff282A28),
-                                  fillColor: Color(0xff282A28),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
 
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Colors.redAccent,
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
 
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
 
                                   prefixIcon: Icon(
                                     Icons.lock_open,
                                     color: Colors.white,
                                   ),
                                   hintText: "Password",
-                                  hintStyle: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
                                 ),
                               ),
                               TextFormField(
+
                                 obscureText: showPassword,
 
                                 controller: authProvider.rePasswordController,
@@ -279,39 +171,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                     FocusManager.instance.primaryFocus?.unfocus(),
                                 style: TextStyle(fontSize: 16, color: Colors.white),
                                 decoration: InputDecoration(
-                                  filled: true,
-                                  focusColor: Color(0xff282A28),
-                                  fillColor: Color(0xff282A28),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
 
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Colors.redAccent,
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
 
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
 
                                   prefixIcon: Icon(
                                     Icons.lock_open,
@@ -330,81 +191,36 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                         : Icon(Icons.visibility, color: Colors.white),
                                   ),
                                   hintText: "Password",
-                                  hintStyle: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
                                 ),
                               ),
                               TextFormField(
+                                validator: (value){
+                                  if(value==null||value.isEmpty){
+                                    return "Please Enter Your Phone";
+                                  }
+                                  return null;
+                                },
                                 controller: authProvider.phoneController,
 
                                 onTapOutside: (event) =>
                                     FocusManager.instance.primaryFocus?.unfocus(),
                                 style: TextStyle(fontSize: 16, color: Colors.white),
                                 decoration: InputDecoration(
-                                  filled: true,
-                                  focusColor: Color(0xff282A28),
-                                  fillColor: Color(0xff282A28),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
 
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Colors.redAccent,
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
 
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
 
                                   prefixIcon: Icon(
                                     Icons.phone_outlined,
                                     color: Colors.white,
                                   ),
                                   hintText: "Phone Number",
-                                  hintStyle: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff282A28),
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
                                 ),
                               ),
                               CupertinoButton(
-                                onPressed: () {
-                                  authProvider.CreateAcc(context);
+                                onPressed: () async{
+                                  await authProvider.CreateAcc(context).then((value) {
+                                    return Navigator.pushReplacementNamed(context, RouteName.Login);
+                                  },);
                                 },
                                 color: AppColors.primaryColor,
                                 minimumSize: Size(double.infinity, 50),

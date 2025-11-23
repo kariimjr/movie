@@ -4,57 +4,45 @@ import 'package:movie/core/theme/app_colors.dart';
 abstract class AppTheme {
   static final ThemeData darkTheme = ThemeData(
     scaffoldBackgroundColor: AppColors.secondaryColor,
-
     colorScheme: ColorScheme.fromSeed(
       seedColor: AppColors.secondaryColor,
       primary: AppColors.primaryColor,
       secondary: AppColors.accentColor,
       surface: AppColors.secondaryColor,
     ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: AppColors.secondaryColor,
 
+      centerTitle: true,
+      iconTheme: IconThemeData(color: AppColors.primaryColor),
+      titleTextStyle: TextStyle(color: AppColors.primaryColor,fontSize: 18),
+
+    ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       focusColor: AppColors.accentColor,
       fillColor: AppColors.accentColor,
       focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 1,
-          color: Color(0xff282A28),
-        ),
+        borderSide: BorderSide(width: 1, color: Color(0xff282A28)),
         borderRadius: BorderRadius.circular(16),
       ),
       errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 1,
-          color: Colors.redAccent,
-        ),
+        borderSide: BorderSide(width: 1, color: Colors.redAccent),
         borderRadius: BorderRadius.circular(16),
       ),
       border: OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 1,
-          color: Color(0xff282A28),
-        ),
+        borderSide: BorderSide(width: 1, color: Color(0xff282A28)),
         borderRadius: BorderRadius.circular(16),
       ),
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 1,
-          color: Color(0xff282A28),
-        ),
+        borderSide: BorderSide(width: 1, color: Color(0xff282A28)),
         borderRadius: BorderRadius.circular(16),
       ),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 1,
-          color: Color(0xff282A28),
-        ),
+        borderSide: BorderSide(width: 1, color: Color(0xff282A28)),
         borderRadius: BorderRadius.circular(16),
       ),
-      hintStyle: TextStyle(
-        fontSize: 16,
-        color: Colors.white,
-      ),
+      hintStyle: TextStyle(fontSize: 16, color: Colors.white),
     ),
     bottomSheetTheme: BottomSheetThemeData(
       backgroundColor: AppColors.secondaryColor,
@@ -66,7 +54,6 @@ abstract class AppTheme {
         ),
       ),
     ),
-
 
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       selectedIconTheme: IconThemeData(color: Color(0xffF6BD00)),

@@ -1,5 +1,4 @@
 
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/Dialog/appDialogs.dart';
@@ -49,10 +48,13 @@ class AuthProvider extends ChangeNotifier {
   Future<void> Login(BuildContext context) async {
     isLoading = true;
     notifyListeners();
-    if (!formKey.currentState!.validate()) return;
+    if (!formKey.currentState!.validate())
+      {
+        isLoading = false;
+        notifyListeners();
+        return;
 
-
-
+      }
     try {
       final user = await authService.Login(
         Email: emailController.text.trim(),
@@ -77,6 +79,28 @@ class AuthProvider extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
   }
+  Future<void> ForgetPassword(BuildContext context) async {
+    isLoading = true;
+    notifyListeners();
+    try {
+       await authService.ForgetPassword(
+        Email: emailController.text.trim(),
+      );
+        AppDialog.showMessage(
+          "Email Send Successfully",
+          context,
+          type: DialogType.success,
+        );
 
+    } catch (e) {
+      AppDialog.showMessage(
+        e.toString(),
+        context,
+        type: DialogType.error,
+      );
+    }
+    isLoading = false;
+    notifyListeners();
+  }
 
 }

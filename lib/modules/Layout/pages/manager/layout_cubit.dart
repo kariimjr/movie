@@ -7,7 +7,7 @@ import 'package:movie/core/apis/api_manager.dart';
 import '../../../../../core/apis/models/movie_response.dart';
 import '../browse.dart';
 import '../home/home.dart';
-import '../profile.dart';
+import '../Profile/profile.dart';
 import '../search.dart';
 import 'layout_state.dart';
 

@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:movie/modules/Layout/pages/Profile/editProfile.dart';
 import 'package:movie/modules/Layout/pages/layout_screen.dart';
 import 'package:movie/modules/authentication/pages/createAccountScreen.dart';
+import 'package:movie/modules/authentication/pages/forgetPassword.dart';
 import 'package:movie/modules/authentication/pages/login_screen.dart';
 import 'package:movie/modules/splash/pages/splash_screen.dart';
 
@@ -18,10 +20,23 @@ class RouteGen {
             return Splashscreen();
           },
         );
+      case RouteName.Onboarding:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return OnboardingScreen();
+          },
+        );
+
       case RouteName.Login:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return LoginScreen();
+          },
+        );
+      case RouteName.Forget:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return ForgetPassword();
           },
         );
       case RouteName.CreateAccount:
@@ -36,10 +51,10 @@ class RouteGen {
             return LayoutScreen();
           },
         );
-      case RouteName.Onboarding:
+      case RouteName.EditProfile:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return OnboardingScreen();
+            return EditProfile();
           },
         );
 

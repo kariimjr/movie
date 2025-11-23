@@ -36,12 +36,16 @@ class CustomBut extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        text,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20,
-                          color: context.appColorTheme.secondary,
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            text,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20,
+                              color: context.appColorTheme.secondary,
+                            ),
+                          ),
                         ),
                       ),
                     ],

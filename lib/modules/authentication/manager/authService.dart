@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class authService {
   static Future<UserCredential?> CreateAccount({
@@ -40,15 +41,28 @@ class authService {
         password: Password,
       );
       return credential;
-    }
-    on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         throw 'Invalid Email or Password.';
       } else if (e.code == 'wrong-password') {
         throw 'Incorrect password';
       }
-    }catch (e) {
+    } catch (e) {
       print(e);
+    }
+  }
+
+  static Future<void> ForgetPassword({required String Email}) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: Email);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        throw 'Invalid Email or Password.';
+      } else {
+        throw 'Something went wrong. Try again.';
+      }
+    }catch(e){
+      print (e);
     }
   }
 
