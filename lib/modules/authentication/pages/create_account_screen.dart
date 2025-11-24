@@ -1,12 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:movie/core/constants/profileAvatar.dart';
+import 'package:movie/core/constants/profile_avatar.dart';
 import 'package:provider/provider.dart';
 import '../../../core/routes/app_routes_name.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/custom_btn.dart';
-import '../manager/authProvider.dart';
+import '../manager/auth_provider.dart';
 
 class CreateAccountScreen extends StatefulWidget {
   const CreateAccountScreen({super.key});
@@ -21,18 +21,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        backgroundColor: AppColors.secondaryColor,
-        title: Text(
-          "Register",
-
-        ),
-        iconTheme: IconThemeData(color: AppColors.primaryColor),
-      ),
+      appBar: AppBar(title: Text("Register")),
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsetsGeometry.symmetric(vertical: 10,),
+            padding: EdgeInsetsGeometry.symmetric(vertical: 10),
             child: ChangeNotifierProvider(
               create: (context) => AuthProvider(),
               child: Consumer<AuthProvider>(
@@ -44,7 +37,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         carouselController: CarouselSliderController(),
                         itemCount: AvatarData.Avtar.length,
                         itemBuilder: (context, index, realIndex) {
-
                           return SizedBox(
                             width: double.infinity,
                             height: 161,
@@ -53,13 +45,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               AvatarData.Avtar[index].images,
                             ),
                           );
-
                         },
                         options: CarouselOptions(
-                          onPageChanged: (index,reason){
+                          onPageChanged: (index, reason) {
                             setState(() {
-                              authProvider.avatarIndex=index;
-
+                              authProvider.avatarIndex = index;
                             });
                           },
                           enlargeCenterPage: true,
@@ -73,25 +63,27 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Form(
-
                           key: authProvider.formKey,
                           child: Column(
                             spacing: 15,
                             children: [
-
                               TextFormField(
-                                validator: (value){
-                                  if(value==null||value.isEmpty){
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
                                     return "Please Enter Your Name";
                                   }
                                   return null;
                                 },
                                 controller: authProvider.nameController,
-                                onTapOutside: (event) =>
-                                    FocusManager.instance.primaryFocus?.unfocus(),
-                                style: TextStyle(fontSize: 16, color: Colors.white),
-                                decoration:
-                                InputDecoration(
+                                onTapOutside: (event) => FocusManager
+                                    .instance
+                                    .primaryFocus
+                                    ?.unfocus(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
+                                decoration: InputDecoration(
                                   prefixIcon: Icon(
                                     Icons.person_2_outlined,
                                     color: Colors.white,
@@ -104,21 +96,24 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                   if (value == null || value.isEmpty) {
                                     return "Email is required"; // ← This shows as error
                                   }
-                                  if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
+                                  if (!RegExp(
+                                    r'\S+@\S+\.\S+',
+                                  ).hasMatch(value)) {
                                     return "Enter a valid email";
                                   }
                                   return null;
                                 },
                                 controller: authProvider.emailController,
 
-                                onTapOutside: (event) =>
-                                    FocusManager.instance.primaryFocus?.unfocus(),
-                                style: TextStyle(fontSize: 16, color: Colors.white),
+                                onTapOutside: (event) => FocusManager
+                                    .instance
+                                    .primaryFocus
+                                    ?.unfocus(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
                                 decoration: InputDecoration(
-
-
-
-
                                   prefixIcon: Icon(
                                     Icons.email_outlined,
                                     color: Colors.white,
@@ -141,13 +136,15 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
                                 controller: authProvider.passwordController,
 
-                                onTapOutside: (event) =>
-                                    FocusManager.instance.primaryFocus?.unfocus(),
-                                style: TextStyle(fontSize: 16, color: Colors.white),
+                                onTapOutside: (event) => FocusManager
+                                    .instance
+                                    .primaryFocus
+                                    ?.unfocus(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
                                 decoration: InputDecoration(
-
-
-
                                   prefixIcon: Icon(
                                     Icons.lock_open,
                                     color: Colors.white,
@@ -156,7 +153,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 ),
                               ),
                               TextFormField(
-
                                 obscureText: showPassword,
 
                                 controller: authProvider.rePasswordController,
@@ -168,13 +164,15 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                     return null;
                                   }
                                 },
-                                onTapOutside: (event) =>
-                                    FocusManager.instance.primaryFocus?.unfocus(),
-                                style: TextStyle(fontSize: 16, color: Colors.white),
+                                onTapOutside: (event) => FocusManager
+                                    .instance
+                                    .primaryFocus
+                                    ?.unfocus(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
                                 decoration: InputDecoration(
-
-
-
                                   prefixIcon: Icon(
                                     Icons.lock_open,
                                     color: Colors.white,
@@ -189,27 +187,32 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                             Icons.visibility_off,
                                             color: Colors.white,
                                           )
-                                        : Icon(Icons.visibility, color: Colors.white),
+                                        : Icon(
+                                            Icons.visibility,
+                                            color: Colors.white,
+                                          ),
                                   ),
                                   hintText: "Password",
                                 ),
                               ),
                               TextFormField(
-                                validator: (value){
-                                  if(value==null||value.isEmpty){
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
                                     return "Please Enter Your Phone";
                                   }
                                   return null;
                                 },
                                 controller: authProvider.phoneController,
 
-                                onTapOutside: (event) =>
-                                    FocusManager.instance.primaryFocus?.unfocus(),
-                                style: TextStyle(fontSize: 16, color: Colors.white),
+                                onTapOutside: (event) => FocusManager
+                                    .instance
+                                    .primaryFocus
+                                    ?.unfocus(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
                                 decoration: InputDecoration(
-
-
-
                                   prefixIcon: Icon(
                                     Icons.phone_outlined,
                                     color: Colors.white,

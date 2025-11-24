@@ -4,8 +4,8 @@ import 'package:movie/core/routes/app_routes_name.dart';
 import 'package:movie/core/theme/app_colors.dart';
 
 import '../../../../core/widgets/custom_btn.dart';
-import 'ProfileTabBar/HistoryTab.dart';
-import 'ProfileTabBar/WatchListTab.dart';
+import 'profile_tab_bar/history_tab.dart';
+import 'profile_tab_bar/watch_list_tab.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -28,7 +28,10 @@ class Profile extends StatelessWidget {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical:52 ,horizontal:24 ),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 52,
+                      horizontal: 24,
+                    ),
                     child: Column(
                       spacing: 20,
                       children: [
@@ -60,7 +63,9 @@ class Profile extends StatelessWidget {
                                               .currentUser!
                                               .photoURL!,
                                         )
-                                      : const AssetImage("assets/avatars/av1.png"),
+                                      : const AssetImage(
+                                          "assets/avatars/av1.png",
+                                        ),
                                 ),
                                 Text(
                                   user?.displayName ?? "Name",
@@ -91,7 +96,10 @@ class Profile extends StatelessWidget {
                               child: CustomBut(
                                 isLoading: false,
                                 onPressed: () {
-                                  Navigator.pushNamed(context, RouteName.EditProfile);
+                                  Navigator.pushNamed(
+                                    context,
+                                    RouteName.EditProfile,
+                                  );
                                 },
                                 text: "Edit Profile",
                               ),
@@ -100,9 +108,12 @@ class Profile extends StatelessWidget {
                               flex: 3,
                               child: CustomBut(
                                 isLoading: false,
-                                onPressed: () async{
+                                onPressed: () async {
                                   await FirebaseAuth.instance.signOut();
-                                  Navigator.pushReplacementNamed(context, RouteName.Login);
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    RouteName.Login,
+                                  );
                                 },
                                 text: "Exit",
                               ),
@@ -113,8 +124,7 @@ class Profile extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child:
-                    DefaultTabController(
+                    child: DefaultTabController(
                       length: 2,
                       initialIndex: 0,
                       child: Column(
@@ -122,7 +132,8 @@ class Profile extends StatelessWidget {
                           TabBar(
                             indicatorSize: TabBarIndicatorSize.tab,
                             indicatorWeight: 3,
-                            indicatorColor: AppColors.primaryColor, // color under selected
+                            indicatorColor:
+                                AppColors.primaryColor, // color under selected
                             labelColor: AppColors.primaryColor,
                             unselectedLabelColor: Colors.grey,
                             tabs: [
@@ -139,14 +150,14 @@ class Profile extends StatelessWidget {
                           Expanded(
                             child: TabBarView(
                               children: [
-                                WatchListTab(),   // your Watch List content
-                                HistoryTab(),     // your History content
+                                WatchListTab(), // your Watch List content
+                                HistoryTab(), // your History content
                               ],
                             ),
                           ),
                         ],
                       ),
-                    )
+                    ),
                   ),
                 ],
               ),

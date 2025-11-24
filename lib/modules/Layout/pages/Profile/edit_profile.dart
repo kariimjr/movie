@@ -6,7 +6,7 @@ import 'package:movie/core/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/widgets/custom_btn.dart';
-import 'manager/ProfileProvider.dart';
+import 'manager/profile_provider.dart';
 
 class EditProfile extends StatelessWidget {
   const EditProfile({super.key});

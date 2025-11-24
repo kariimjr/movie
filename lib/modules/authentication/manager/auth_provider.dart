@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../core/Dialog/appDialogs.dart';
+import '../../../core/Dialog/app_dialogs.dart';
 import '../../../core/routes/app_routes_name.dart';
-import 'authService.dart';
-import 'package:movie/core/constants/profileAvatar.dart';
+import 'auth_service.dart';
+import 'package:movie/core/constants/profile_avatar.dart';
 
 
 class AuthProvider extends ChangeNotifier {

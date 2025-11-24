@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/core/routes/app_routes_name.dart';
-import 'package:movie/modules/Layout/pages/Profile/manager/profileService.dart';
+import 'package:movie/modules/Layout/pages/Profile/manager/profile_service.dart';
 
-import '../../../../../core/Dialog/appDialogs.dart';
+import '../../../../../core/Dialog/app_dialogs.dart';
 
 class ProfileProvider extends ChangeNotifier {
   bool isLoading = false;

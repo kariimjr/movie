@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movie/core/theme/app_theme.dart';
 import 'package:movie/core/widgets/custom_btn.dart';
-import 'package:movie/modules/authentication/manager/authProvider.dart';
+import 'package:movie/modules/authentication/manager/auth_provider.dart';
 
 import 'package:provider/provider.dart';
 

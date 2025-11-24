@@ -1,27 +1,35 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie/core/apis/api_manager.dart';
 
-import '../../../../../core/apis/models/movie_response.dart';
-import '../browse.dart';
-import '../home/home.dart';
-import '../Profile/profile.dart';
-import '../search.dart';
+import '../../../../core/apis/api_manager.dart';
+import '../../../../core/apis/models/movie_response.dart';
+import '../pages/Profile/profile.dart';
+import '../pages/browse.dart';
+import '../pages/home/home.dart';
+
+import '../pages/search.dart';
 import 'layout_state.dart';
 
-class LayoutCubit extends Cubit<LayoutState>{
+
+
+class LayoutCubit  extends Cubit<LayoutState>{
   LayoutCubit() : super(InitState());
 
   final ApiManager _apiManager = ApiManager();
   CarouselSliderController? carouselController = CarouselSliderController();
-  int navIndex = 0;
   int currentIndex = 0;
-
-  List<Movies> movies = [];
   List<Widget> screens = [Home(), Search(), Browse(), Profile()];
+  List<Movies> movies = [];
   Set<String> genres = {};
+
+
+  int navIndex = 0;
+
+  void onNavTap(int index) {
+    navIndex = index;
+    emit(OnNavTapChanged());
+  }
 
 
 
@@ -31,10 +39,6 @@ class LayoutCubit extends Cubit<LayoutState>{
     await getMoviesGenres();
   }
 
-  void onNavTap(int index) {
-    navIndex = index;
-    emit(OnNavTapChanged());
-  }
 
 
   Future<void> getMovies() async{
@@ -66,4 +70,5 @@ class LayoutCubit extends Cubit<LayoutState>{
     currentIndex = index;
     emit(OnCarouselChanged());
   }
+
 }

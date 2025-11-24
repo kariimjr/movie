@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:movie/modules/Layout/pages/manager/layout_cubit.dart';
-import 'package:movie/modules/Layout/pages/manager/layout_state.dart';
+
+
 import 'package:provider/provider.dart';
 
-import '../../onboarding_screen/onBoarding_provider/view_model.dart';
+import '../onboarding_screen/onBoarding_provider/view_model.dart';
+import 'manager/layout_cubit.dart';
+import 'manager/layout_state.dart';
+
+
 
 
 class LayoutScreen extends StatelessWidget {

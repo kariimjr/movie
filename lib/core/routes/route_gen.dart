@@ -1,12 +1,12 @@
 
 import 'package:flutter/material.dart';
-import 'package:movie/modules/Layout/pages/Profile/editProfile.dart';
-import 'package:movie/modules/Layout/pages/layout_screen.dart';
-import 'package:movie/modules/authentication/pages/createAccountScreen.dart';
-import 'package:movie/modules/authentication/pages/forgetPassword.dart';
+import 'package:movie/modules/Layout/pages/Profile/edit_profile.dart';
+import 'package:movie/modules/authentication/pages/create_account_screen.dart';
+import 'package:movie/modules/authentication/pages/forget_password.dart';
 import 'package:movie/modules/authentication/pages/login_screen.dart';
 import 'package:movie/modules/splash/pages/splash_screen.dart';
 
+import '../../modules/layout/layout_screen.dart';
 import '../../modules/onboarding_screen/onboarding_screen.dart';
 import 'app_routes_name.dart';
 //
