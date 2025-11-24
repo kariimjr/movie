@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:movie/modules/onboarding_screen/onboarding_provider/onboarding_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../onBoarding_provider/view_model.dart';
 
 class OnboardingScreen extends StatelessWidget {
   final bool showBottomSheet;
@@ -12,8 +12,8 @@ class OnboardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => ViewModel(),
-      child: Consumer<ViewModel>(
+      create: (_) => OnboardingProvider(),
+      child: Consumer<OnboardingProvider>(
         builder: (context, viewModel, child) {
           viewModel.scaffoldKey = scaffoldKey;
 

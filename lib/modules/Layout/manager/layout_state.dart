@@ -9,6 +9,9 @@ class GetMoviesErrorState extends LayoutState{}
 
 
 class OnCarouselChanged extends LayoutState{}
+class OnMarkChange extends LayoutState{}
+class GetSimilarLoading extends LayoutState{}
+
 
 class GetMoviesGenresLoadingState extends LayoutState{}
 class GetMoviesGenresSuccessState extends LayoutState{}

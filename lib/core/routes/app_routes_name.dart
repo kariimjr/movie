@@ -7,6 +7,8 @@ class RouteName{
   static const String CreateAccount ="CreateAccountScreen";
   static const String Layout ="Layout";
   static const String EditProfile ="EditProfile";
+  static const String MovieDetails ="MovieDetails";
+
 
 
 }

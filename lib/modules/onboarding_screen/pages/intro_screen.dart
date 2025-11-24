@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/core/extensions/extension.dart';
-import 'package:movie/core/routes/app_routes_name.dart';
-import 'package:movie/modules/onboarding_screen/onBoarding_provider/view_model.dart';
+import 'package:movie/modules/onboarding_screen/onBoarding_provider/onboarding_provider.dart';
 
 import '../../../core/widgets/custom_btn.dart';
+import '../onboarding_provider/onboarding_provider.dart';
 import 'onboarding_screen.dart';
 
 class IntroScreen extends StatelessWidget {
@@ -58,7 +58,6 @@ class IntroScreen extends StatelessWidget {
                 CustomBut(
                   isLoading: false,
                   onPressed: () {
-                    ViewModel viewModel = ViewModel();
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

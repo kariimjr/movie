@@ -6,23 +6,23 @@ import '../../../../core/apis/api_manager.dart';
 import '../../../../core/apis/models/movie_response.dart';
 import '../pages/Profile/profile.dart';
 import '../pages/browse.dart';
-import '../pages/home/home.dart';
+import '../pages/home/home_screens/home.dart';
 
 import '../pages/search.dart';
 import 'layout_state.dart';
 
-
-
-class LayoutCubit  extends Cubit<LayoutState>{
+class LayoutCubit extends Cubit<LayoutState> {
   LayoutCubit() : super(InitState());
 
   final ApiManager _apiManager = ApiManager();
   CarouselSliderController? carouselController = CarouselSliderController();
   int currentIndex = 0;
+  bool isMarked = false;
+  bool isCalled = false;
   List<Widget> screens = [Home(), Search(), Browse(), Profile()];
   List<Movies> movies = [];
+  List<Movies> similar = [];
   Set<String> genres = {};
-
 
   int navIndex = 0;
 
@@ -31,7 +31,10 @@ class LayoutCubit  extends Cubit<LayoutState>{
     emit(OnNavTapChanged());
   }
 
-
+  void makeMovieMarked() {
+    isMarked ^= true;
+    emit(OnMarkChange());
+  }
 
   Future<void> init() async {
     emit(InitState());
@@ -39,15 +42,13 @@ class LayoutCubit  extends Cubit<LayoutState>{
     await getMoviesGenres();
   }
 
-
-
-  Future<void> getMovies() async{
+  Future<void> getMovies() async {
     emit(GetMoviesLoadingState());
-    try{
+    try {
       final data = await _apiManager.getMovies();
       movies = data;
       emit(GetMoviesSuccessState());
-    }catch(e){
+    } catch (e) {
       emit(GetMoviesErrorState());
       print(e);
     }
@@ -65,10 +66,20 @@ class LayoutCubit  extends Cubit<LayoutState>{
     }
   }
 
-
-  void onCarouselChanged(int index){
+  void onCarouselChanged(int index) {
     currentIndex = index;
     emit(OnCarouselChanged());
   }
 
+  void getSimilar(Movies movie) {
+    for (var e in movies) {
+      for (var genre in movie.genres!) {
+        if (e.genres!.contains(genre)) {
+          similar.add(e);
+        }
+      }
+    }
+    print(similar.length);
+    emit(GetSimilarLoading());
+  }
 }

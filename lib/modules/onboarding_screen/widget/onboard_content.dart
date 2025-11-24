@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../core/routes/app_routes_name.dart';
 
 import '../../../core/widgets/custom_btn.dart';
-import '../onBoarding_provider/view_model.dart';
+import '../onboarding_provider/onboarding_provider.dart';
 
 
 class OnboardContent extends StatelessWidget {
@@ -13,7 +13,7 @@ class OnboardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<ViewModel>(context);
+    final viewModel = Provider.of<OnboardingProvider>(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -56,7 +56,7 @@ class OnboardContent extends StatelessWidget {
               SizedBox(height: 16,),
               CustomBut(
                 isLoading: false,
-
+                isBack: true,
                 onPressed: () async {
                   await viewModel.getPreviousCard();
                 },

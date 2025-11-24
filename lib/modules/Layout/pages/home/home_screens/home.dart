@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:movie/core/extensions/extension.dart';
+import 'package:movie/core/routes/app_routes_name.dart';
 import 'package:movie/modules/Layout/pages/home/widgets/movie_card.dart';
 import 'package:movie/modules/layout/manager/layout_cubit.dart';
 import 'package:movie/modules/layout/manager/layout_state.dart';
@@ -79,7 +80,12 @@ class _HomeState extends State<Home> {
                                   itemCount: cubit.movies.length,
                                   itemBuilder: (context, index, realIdx) {
                                     final movie = cubit.movies[index];
-                                    return MovieCard(movie: movie);
+                                    return InkWell(
+                                      onTap: (){
+                                        Navigator.pushNamed(context, RouteName.MovieDetails, arguments: movie);
+                                      },
+                                      child: MovieCard(movie: movie),
+                                    );
                                   },
                                   options: CarouselOptions(
                                     height: 350,

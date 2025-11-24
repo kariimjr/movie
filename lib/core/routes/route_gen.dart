@@ -8,6 +8,7 @@ import 'package:movie/modules/onboarding_screen/pages/intro_screen.dart';
 import 'package:movie/modules/splash/pages/splash_screen.dart';
 
 import '../../modules/layout/layout_screen.dart';
+import '../../modules/layout/pages/home/home_screens/movie_details/movie_details.dart';
 import '../../modules/onboarding_screen/pages/onboarding_screen.dart';
 import 'app_routes_name.dart';
 //
@@ -62,6 +63,13 @@ class RouteGen {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return EditProfile();
+          },
+        );
+      case RouteName.MovieDetails:
+        return PageRouteBuilder(
+          settings: RouteSettings(arguments: setting.arguments),
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return MovieDetails();
           },
         );
 

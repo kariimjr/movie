@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:provider/provider.dart';
 
-import '../onboarding_screen/onBoarding_provider/view_model.dart';
+import '../onboarding_screen/onBoarding_provider/onboarding_provider.dart';
 import 'manager/layout_cubit.dart';
 import 'manager/layout_state.dart';
 
