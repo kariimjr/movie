@@ -4,10 +4,11 @@ import 'package:movie/modules/Layout/pages/Profile/edit_profile.dart';
 import 'package:movie/modules/authentication/pages/create_account_screen.dart';
 import 'package:movie/modules/authentication/pages/forget_password.dart';
 import 'package:movie/modules/authentication/pages/login_screen.dart';
+import 'package:movie/modules/onboarding_screen/pages/intro_screen.dart';
 import 'package:movie/modules/splash/pages/splash_screen.dart';
 
 import '../../modules/layout/layout_screen.dart';
-import '../../modules/onboarding_screen/onboarding_screen.dart';
+import '../../modules/onboarding_screen/pages/onboarding_screen.dart';
 import 'app_routes_name.dart';
 //
 class RouteGen {
@@ -20,7 +21,13 @@ class RouteGen {
             return Splashscreen();
           },
         );
-      case RouteName.Onboarding:
+      case RouteName.Intro:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return IntroScreen();
+          },
+        );
+        case RouteName.Onboarding:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return OnboardingScreen();

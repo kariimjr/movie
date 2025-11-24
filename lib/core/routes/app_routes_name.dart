@@ -1,5 +1,6 @@
 class RouteName{
   static const String Splash = "/";
+  static const String Intro ="Intro";
   static const String Onboarding = "onBoarding";
   static const String Login = "LoginScreen";
   static const String Forget = "forgetPassword";

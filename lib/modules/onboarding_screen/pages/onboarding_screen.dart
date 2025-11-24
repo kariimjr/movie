@@ -1,23 +1,28 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:movie/modules/onboarding_screen/widget/onboard_content.dart';
 import 'package:provider/provider.dart';
 
-import 'onBoarding_provider/view_model.dart';
-
-
+import '../onBoarding_provider/view_model.dart';
 
 class OnboardingScreen extends StatelessWidget {
-  OnboardingScreen({super.key});
+  final bool showBottomSheet;
+  OnboardingScreen({Key? key, this.showBottomSheet = false}) : super(key: key);
+
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ViewModel(),
+      create: (_) => ViewModel(),
       child: Consumer<ViewModel>(
-        builder: (BuildContext context, viewModel, Widget? child) {
+        builder: (context, viewModel, child) {
           viewModel.scaffoldKey = scaffoldKey;
+
+          if (showBottomSheet) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              viewModel.openBottomSheet(context);
+            });
+          }
+
           return Scaffold(
             key: scaffoldKey,
             body: Stack(
@@ -35,9 +40,7 @@ class OnboardingScreen extends StatelessWidget {
                         begin: Alignment.bottomCenter,
                         end: Alignment.center,
                         colors: [
-                          viewModel
-                              .onboardingData[viewModel.pageViewIndex]
-                              .color,
+                          viewModel.onboardingData[viewModel.pageViewIndex].color,
                           Colors.transparent,
                         ],
                       ),
@@ -46,12 +49,10 @@ class OnboardingScreen extends StatelessWidget {
                 ),
                 PageView.builder(
                   controller: viewModel.pageController,
-                  onPageChanged: (index) =>
-                      viewModel.onPageChange(index, context),
+                  onPageChanged: (index) async =>
+                  await viewModel.onPageChange(index, context),
                   itemCount: viewModel.onboardingLength,
-                  itemBuilder: (context, index) {
-                    return viewModel.isFirst ? OnboardContent() : SizedBox();
-                  },
+                  itemBuilder: (context, index) => SizedBox(),
                 ),
               ],
             ),

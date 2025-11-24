@@ -26,9 +26,7 @@ class OnboardContent extends StatelessWidget {
           Text(
             textAlign: TextAlign.center,
             viewModel.onboardingData[viewModel.pageViewIndex].title,
-            style: viewModel.isFirst
-                ? context.appTextTheme.bodyLarge
-                : context.appTextTheme.bodyMedium,
+            style: context.appTextTheme.bodyMedium,
           ),
           SizedBox(height: 16),
           Text(
@@ -43,16 +41,17 @@ class OnboardContent extends StatelessWidget {
               await viewModel.getNextCard();
               await Future.delayed(Duration(milliseconds: 100));
               if(viewModel.isLast){
-                Navigator.pushNamed(context,RouteName.Login );
+
+                Navigator.pushNamed(context,RouteName.Login ).then((_){
+                  viewModel.bottomSheetController!.close();
+                });
               }
             },
-            text: viewModel.isFirst
-                ? 'Explore Now'
-                : viewModel.isLast
+            text: viewModel.isLast
                 ? 'Finish'
                 : 'Next',
           ),
-          viewModel.pageViewIndex > 1 ? Column(
+          viewModel.pageViewIndex > 0 ? Column(
             children: [
               SizedBox(height: 16,),
               CustomBut(

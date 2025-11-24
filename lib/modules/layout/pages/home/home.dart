@@ -35,16 +35,22 @@ class _HomeState extends State<Home> {
             children: [
               BlocBuilder<LayoutCubit, LayoutState>(
                 builder: (BuildContext context, LayoutState state) {
-                  if(state is GetMoviesLoadingState){
-                    return SafeArea(child: Center(child: CircularProgressIndicator(color: Colors.yellowAccent,)));
-                  }
-                  else if(state is GetMoviesSuccessState){
+                  if (state is GetMoviesLoadingState) {
+                    return SafeArea(
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.amberAccent,
+                        ),
+                      ),
+                    );
+                  } else if (state is GetMoviesSuccessState) {
                     return Stack(
                       children: [
                         Positioned.fill(
                           child: CachedNetworkImage(
-                            imageUrl:
-                            cubit.movies[cubit.currentIndex].largeCoverImage!,
+                            imageUrl: cubit
+                                .movies[cubit.currentIndex]
+                                .largeCoverImage!,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -94,76 +100,108 @@ class _HomeState extends State<Home> {
                         ),
                       ],
                     );
-                  }
-                  else if(state is GetMoviesErrorState){
-                    return Text("Error", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.red),);
+                  } else if (state is GetMoviesErrorState) {
+                    return Text(
+                      "Error",
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red,
+                      ),
+                    );
                   }
                   return SizedBox();
                 },
                 buildWhen: (previous, current) {
-                  return current is GetMoviesErrorState || current is GetMoviesSuccessState || current is GetMoviesLoadingState;
+                  return current is GetMoviesErrorState ||
+                      current is GetMoviesSuccessState ||
+                      current is GetMoviesLoadingState;
                 },
-              
               ),
               BlocBuilder<LayoutCubit, LayoutState>(
+                buildWhen: (previous, current) {
+                  return current is GetMoviesGenresErrorState ||
+                      current is GetMoviesGenresSuccessState ||
+                      current is GetMoviesGenresLoadingState;
+                },
                 builder: (BuildContext context, state) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      children: cubit.genres.map((genre) {
-                        final filteredMovies = cubit.movies
-                            .where((m) => m.genres!.contains(genre))
-                            .toList();
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(genre),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'See More',
-                                        style: context.appTextTheme.labelSmall!
-                                            .copyWith(
-                                              color: context.appColorTheme.primary,
-                                            ),
-                                      ),
-                                      SizedBox(width: 2),
-                                      Icon(
-                                        Icons.arrow_forward,
-                                        color: context.appColorTheme.primary,
-                                        size: 16,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 10),
-                              SizedBox(
-                                height: 180,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  physics: BouncingScrollPhysics(),
-                                  itemCount: filteredMovies.length,
-                                  itemBuilder: (context, index) {
-                                    final movie = filteredMovies[index];
-                                    return Padding(
-                                      padding: const EdgeInsets.only(right: 12),
-                                      child: MovieCard(movie: movie),
-                                    );
-                                  },
+                  if (state is GetMoviesGenresLoadingState) {
+                    return SafeArea(
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.amberAccent,
+                        ),
+                      ),
+                    );
+                  } else if (state is GetMoviesGenresSuccessState) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        children: cubit.genres.map((genre) {
+                          final filteredMovies = cubit.movies
+                              .where((m) => m.genres!.contains(genre))
+                              .toList();
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(genre),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'See More',
+                                          style: context
+                                              .appTextTheme
+                                              .labelSmall!
+                                              .copyWith(
+                                                color: context
+                                                    .appColorTheme
+                                                    .primary,
+                                              ),
+                                        ),
+                                        SizedBox(width: 2),
+                                        Icon(
+                                          Icons.arrow_forward,
+                                          color: context.appColorTheme.primary,
+                                          size: 16,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  );
+                                SizedBox(height: 10),
+                                SizedBox(
+                                  height: 180,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    physics: BouncingScrollPhysics(),
+                                    itemCount: filteredMovies.length,
+                                    itemBuilder: (context, index) {
+                                      final movie = filteredMovies[index];
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                          right: 12,
+                                        ),
+                                        child: MovieCard(movie: movie),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    );
+                  } else if (state is GetMoviesGenresErrorState) {
+                    return Icon(Icons.error, color: Colors.red);
+                  }
+                  return SizedBox();
                 },
               ),
             ],

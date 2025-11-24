@@ -19,12 +19,12 @@ class ViewModel extends ChangeNotifier {
 
   int pageViewIndex = 0;
   bool isFirst = true;
-  bool isLast = true;
+  bool isLast = false;
 
 
   Future<void> onPageChange(int index, BuildContext context) async{
     pageViewIndex = index;
-    if (index != 0) await openBottomSheet(context);
+    await openBottomSheet(context);
     isFirst = (pageViewIndex == 0);
     isLast = (pageViewIndex == onboardingLength - 1);
     notifyListeners();

@@ -13,13 +13,7 @@ class OnboardingData {
   });
 
   static List<OnboardingData> onboardingData = [
-    OnboardingData(
-      title: 'Find Your Next\nFavorite Movie Here',
-      description:
-          'Get access to a huge library of movies\nto suit all tastes. You will surely like it.',
-      images: 'assets/images/onboarding_image1.png',
-      color: Color(0xff121312),
-    ),
+
     OnboardingData(
       title: 'Discover Movies',
       description:

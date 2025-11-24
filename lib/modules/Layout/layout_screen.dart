@@ -40,6 +40,7 @@ class LayoutScreen extends StatelessWidget {
                         Color(0xffF6BD00),
                         BlendMode.srcIn,
                       ),
+
                     ),
                   ),
                   BottomNavigationBarItem(
