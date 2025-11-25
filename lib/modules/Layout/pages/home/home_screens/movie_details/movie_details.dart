@@ -26,8 +26,8 @@ class _MovieDetailsState extends State<MovieDetails> {
   void initState() {
     super.initState();
     cubit = LayoutCubit();
-    WidgetsBinding.instance.addPostFrameCallback((_){
-      cubit.getMovies();
+    WidgetsBinding.instance.addPostFrameCallback((_) async{
+       await cubit.getMovies();
       cubit.getSimilar(movie!);
     });
 
@@ -37,7 +37,6 @@ class _MovieDetailsState extends State<MovieDetails> {
   @override
   Widget build(BuildContext context) {
     movie ??= ModalRoute.of(context)!.settings.arguments as Movies;
-
     return BlocProvider(
       create: (BuildContext context) => cubit,
       child: BlocBuilder<LayoutCubit, LayoutState>(
@@ -198,7 +197,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                             Expanded(
                               child: Center(
                                 child: InfoWidget(
-                                  text: '${movie!.runtime ?? 0} min',
+                                  text: '${movie!.runtime ?? 0}',
                                   icon: Icons.watch_later,
                                 ),
                               ),
@@ -245,7 +244,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                             return GridView.builder(
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
-                              itemCount: cubit.similar.length,
+                              itemCount: 4,
                               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
                                 childAspectRatio: 0.7,
@@ -258,6 +257,20 @@ class _MovieDetailsState extends State<MovieDetails> {
                             );
                           },
                         )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text("Summary"),
+                          ],
+                        ),
                       ],
                     ),
                   ),

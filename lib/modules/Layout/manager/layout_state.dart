@@ -6,11 +6,15 @@ class OnNavTapChanged extends LayoutState{}
 class GetMoviesLoadingState extends LayoutState{}
 class GetMoviesSuccessState extends LayoutState{}
 class GetMoviesErrorState extends LayoutState{}
+class GetSimilarLoading extends LayoutState{}
 
 
 class OnCarouselChanged extends LayoutState{}
 class OnMarkChange extends LayoutState{}
-class GetSimilarLoading extends LayoutState{}
+class GetSimilarSuccess extends LayoutState{}
+
+class SearchMovie extends LayoutState{}
+
 
 
 class GetMoviesGenresLoadingState extends LayoutState{}

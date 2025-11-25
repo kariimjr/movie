@@ -11,6 +11,8 @@ abstract class AppTheme {
       surface: AppColors.secondaryColor,
     ),
 
+
+
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.secondaryColor,
 

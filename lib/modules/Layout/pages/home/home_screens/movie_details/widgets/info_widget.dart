@@ -29,12 +29,20 @@ class InfoWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Icon(
-            icon,
-            color: context.appColorTheme.primary,
-            size: 28,
+          Expanded(
+            child: Icon(
+              icon,
+              color: context.appColorTheme.primary,
+              size: 28,
+            ),
           ),
-          Text(text!),
+          Expanded(
+            child: Text(text!,
+              maxLines: 1,
+              softWrap: false,
+              overflow: TextOverflow.fade,
+            ),
+          ),
         ],
       ),
     );

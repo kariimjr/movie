@@ -23,6 +23,8 @@ class LayoutCubit extends Cubit<LayoutState> {
   List<Movies> movies = [];
   List<Movies> similar = [];
   Set<String> genres = {};
+  List<Movies>searched=[];
+
 
   int navIndex = 0;
 
@@ -72,14 +74,37 @@ class LayoutCubit extends Cubit<LayoutState> {
   }
 
   void getSimilar(Movies movie) {
+    emit(GetSimilarLoading());
+
+    similar.clear();
+
     for (var e in movies) {
-      for (var genre in movie.genres!) {
-        if (e.genres!.contains(genre)) {
-          similar.add(e);
-        }
+      if (e == movie) continue;
+
+
+      bool hasSimilarGenre = e.genres!.any((g) => movie.genres!.contains(g));
+
+      if (hasSimilarGenre) {
+        similar.add(e);
       }
     }
-    print(similar.length);
-    emit(GetSimilarLoading());
+
+    emit(GetSimilarSuccess()); // notify UI
+  }
+
+  void searchMovies(String query) {
+    if (query.isEmpty) {
+      searched.clear();
+      emit(InitState());
+      return;
+    }
+
+    searched = movies.where((movie) {
+      return movie.title!.toLowerCase().contains(query.toLowerCase());
+    }).toList();
+
+    emit(SearchMovie());
   }
 }
+
+
