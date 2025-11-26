@@ -2,12 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/core/routes/app_routes_name.dart';
-import 'package:movie/modules/Layout/pages/Profile/manager/profile_service.dart';
 
-import '../../../../../core/Dialog/app_dialogs.dart';
 
 class ProfileProvider extends ChangeNotifier {
   bool isLoading = false;
+  final user = FirebaseAuth.instance.currentUser;
+  TextEditingController nameController = TextEditingController();
+  final ProfileFormKey = GlobalKey<FormState>();
+
+
 
   Future<void> deleteAccount(BuildContext context) async {
     isLoading = true;
@@ -27,14 +30,35 @@ class ProfileProvider extends ChangeNotifier {
         SnackBar(content: Text('Error deleting account: Please re-Login')),
 
       );
-      Future.delayed(Duration(milliseconds: 2),() {
-        Navigator.pushReplacementNamed(context, RouteName.Login);
-      },);
 
     } finally {
       isLoading = false;
       notifyListeners();
     }
   }
+
+
+
+
+
+  Future <void>UpdateName(BuildContext contex)async {
+    if(!ProfileFormKey.currentState!.validate()){
+      try{
+        await FirebaseAuth.instance.currentUser?.updateDisplayName(nameController.text);
+        await FirebaseFirestore.instance
+            .collection("users")
+            .doc(user?.uid)
+            .update({"name": nameController.text});
+        await FirebaseAuth.instance.currentUser?.reload();
+        notifyListeners();
+      }catch(e,s){
+        print(e);
+
+
+      }
+    }
+
+
+}
 
 }

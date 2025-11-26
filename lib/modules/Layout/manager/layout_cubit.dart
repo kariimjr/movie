@@ -1,4 +1,6 @@
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,10 +35,57 @@ class LayoutCubit extends Cubit<LayoutState> {
     emit(OnNavTapChanged());
   }
 
-  void makeMovieMarked() {
-    isMarked ^= true;
+  Future<void> makeMovieMarked(Movies movie) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final docRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('watchlist')
+        .doc(movie.id.toString());
+
+    try {
+      final doc = await docRef.get();
+
+      if (doc.exists) {
+
+        await docRef.delete();
+        isMarked = false;
+      } else {
+
+        await docRef.set({
+          'id': movie.id,
+          'title': movie.title,
+          'year': movie.year,
+          'rating': movie.rating,
+          'coverImage': movie.largeCoverImage,
+          'backgroundImage': movie.backgroundImage,
+        });
+        isMarked = true;
+      }
+
+      emit(OnMarkChange());
+    } catch (e) {
+      print(e);
+    }
+  }
+  Future<void> checkIfMovieMarked(Movies movie) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('watchlist')
+        .doc(movie.id.toString())
+        .get();
+
+    isMarked = doc.exists; // true if movie is in watchlist
     emit(OnMarkChange());
   }
+
+
 
   Future<void> init() async {
     emit(InitState());
@@ -105,6 +154,10 @@ class LayoutCubit extends Cubit<LayoutState> {
 
     emit(SearchMovie());
   }
+
+
+
+
 }
 
 

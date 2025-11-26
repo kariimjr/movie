@@ -22,6 +22,9 @@ class _MovieDetailsState extends State<MovieDetails> {
   Movies? movie;
   late LayoutCubit cubit;
 
+
+
+
   @override
   void initState() {
     super.initState();
@@ -29,6 +32,7 @@ class _MovieDetailsState extends State<MovieDetails> {
     WidgetsBinding.instance.addPostFrameCallback((_) async{
        await cubit.getMovies();
       cubit.getSimilar(movie!);
+       await cubit.checkIfMovieMarke(movie!);
     });
 
   }
@@ -100,7 +104,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                                         return IconButton(
                                           color: Colors.white,
                                           onPressed: () {
-                                            cubit.makeMovieMarked();
+                                            cubit.makeMovieMarked(movie!);
                                           },
                                           icon: Icon(
                                             cubit.isMarked
