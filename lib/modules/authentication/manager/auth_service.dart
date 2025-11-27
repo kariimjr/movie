@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class authService {
   static Future<UserCredential?> CreateAccount({
@@ -20,9 +21,6 @@ class authService {
       await credential.user?.reload();
 
       return credential;
-
-
-
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw 'The password provided is too weak.';
@@ -64,10 +62,11 @@ class authService {
       } else {
         throw 'Something went wrong. Try again.';
       }
-    }catch(e){
-      print (e);
+    } catch (e) {
+      print(e);
     }
   }
+
   static Future<void> saveUserData({
     required String uid,
     required String Name,
@@ -88,4 +87,48 @@ class authService {
       throw 'Failed to save user data';
     }
   }
+  /// Google Sign-In
+  static Future<UserCredential?> signInWithGoogle() async {
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+      if (googleUser == null) return null; // user cancelled
+
+      final googleAuth = await googleUser.authentication;
+
+      if (googleAuth.accessToken == null || googleAuth.idToken == null) {
+        throw FirebaseAuthException(
+          code: 'ERROR_MISSING_GOOGLE_AUTH_TOKEN',
+          message: 'Missing Google Auth Token',
+        );
+      }
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken!,
+        idToken: googleAuth.idToken!,
+      );
+
+      final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+      final user = userCredential.user;
+      if (user != null) {
+        final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+        if (!doc.exists) {
+          await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+            'name': user.displayName ?? '',
+            'email': user.email ?? '',
+            'phone': user.phoneNumber ?? '',
+            'avatar': user.photoURL ?? '',
+            'createdAt': FieldValue.serverTimestamp(),
+          });
+        }
+      }
+
+      return userCredential;
+    } catch (e, st) {
+      print('Google Sign-In Error: $e\n$st');
+      rethrow;
+    }
+  }
+
 }

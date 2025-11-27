@@ -199,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     CustomBut(
                       onPressed: () {
-                        authProvider.Login(context);
+                        authProvider.signInWithGoogle(context);
                       },
                       text: "Login With Google",
                       isLoading: false,

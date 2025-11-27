@@ -25,58 +25,61 @@ class LayoutScreen extends StatelessWidget {
           body: cubit.screens[cubit.navIndex],
           bottomNavigationBar: Container(
             margin: EdgeInsets.all(9),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: BottomNavigationBar(
-                onTap: cubit.onNavTap,
-                currentIndex: cubit.navIndex,
-                items: [
-                  BottomNavigationBarItem(
-                    icon: SvgPicture.asset("assets/icons/home.svg"),
-                    label: "Home",
-                    activeIcon: SvgPicture.asset(
-                      "assets/icons/home.svg",
-                      colorFilter: ColorFilter.mode(
-                        Color(0xffF6BD00),
-                        BlendMode.srcIn,
-                      ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: BottomNavigationBar(
+                  onTap: cubit.onNavTap,
+                  currentIndex: cubit.navIndex,
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: SvgPicture.asset("assets/icons/home.svg"),
+                      label: "Home",
+                      activeIcon: SvgPicture.asset(
+                        "assets/icons/home.svg",
+                        colorFilter: ColorFilter.mode(
+                          Color(0xffF6BD00),
+                          BlendMode.srcIn,
+                        ),
 
-                    ),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: SvgPicture.asset("assets/icons/search.svg"),
-                    label: "Search",
-                    activeIcon: SvgPicture.asset(
-                      "assets/icons/search.svg",
-                      colorFilter: ColorFilter.mode(
-                        Color(0xffF6BD00),
-                        BlendMode.srcIn,
                       ),
                     ),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: SvgPicture.asset("assets/icons/explore.svg"),
-                    label: "Explore",
-                    activeIcon: SvgPicture.asset(
-                      "assets/icons/explore.svg",
-                      colorFilter: ColorFilter.mode(
-                        Color(0xffF6BD00),
-                        BlendMode.srcIn,
+                    BottomNavigationBarItem(
+                      icon: SvgPicture.asset("assets/icons/search.svg"),
+                      label: "Search",
+                      activeIcon: SvgPicture.asset(
+                        "assets/icons/search.svg",
+                        colorFilter: ColorFilter.mode(
+                          Color(0xffF6BD00),
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: SvgPicture.asset("assets/icons/profile.svg"),
-                    label: "Profile",
-                    activeIcon: SvgPicture.asset(
-                      "assets/icons/profile.svg",
-                      colorFilter: ColorFilter.mode(
-                        Color(0xffF6BD00),
-                        BlendMode.srcIn,
+                    BottomNavigationBarItem(
+                      icon: SvgPicture.asset("assets/icons/explore.svg"),
+                      label: "Explore",
+                      activeIcon: SvgPicture.asset(
+                        "assets/icons/explore.svg",
+                        colorFilter: ColorFilter.mode(
+                          Color(0xffF6BD00),
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    BottomNavigationBarItem(
+                      icon: SvgPicture.asset("assets/icons/profile.svg"),
+                      label: "Profile",
+                      activeIcon: SvgPicture.asset(
+                        "assets/icons/profile.svg",
+                        colorFilter: ColorFilter.mode(
+                          Color(0xffF6BD00),
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

@@ -111,4 +111,30 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> signInWithGoogle(BuildContext context) async {
+    isLoading = true;
+    notifyListeners();
+
+    try {
+      final userCredential = await authService.signInWithGoogle();
+      if (userCredential != null && userCredential.user != null) {
+        AppDialog.showMessage(
+          "Welcome ${userCredential.user!.displayName ?? ''}",
+          context,
+          type: DialogType.success,
+        );
+        Navigator.pushReplacementNamed(context, RouteName.Layout);
+      }
+    } catch (e) {
+      AppDialog.showMessage(
+        e.toString(),
+        context,
+        type: DialogType.error,
+      );
+    }
+
+    isLoading = false;
+    notifyListeners();
+  }
+
 }
