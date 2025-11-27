@@ -5,7 +5,7 @@ import 'package:movie/core/extensions/extension.dart';
 import 'package:movie/modules/layout/manager/layout_cubit.dart';
 import 'package:movie/modules/layout/manager/layout_state.dart';
 
-import 'home/widgets/movie_card.dart';
+import '../home/widgets/movie_card.dart';
 
 class Browse extends StatefulWidget {
   const Browse({super.key});

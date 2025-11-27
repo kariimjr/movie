@@ -24,3 +24,6 @@ class GetMoviesGenresErrorState extends LayoutState{}
 class GetMovieDetailsErrorState extends LayoutState{}
 class GetMovieDetailsSuccessState extends LayoutState{}
 class GetMovieDetailsLoadingState extends LayoutState{}
+
+class GetFilteredMovies extends LayoutState{}
+class OnTapBarChange extends LayoutState{}

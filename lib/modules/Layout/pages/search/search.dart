@@ -4,9 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:movie/modules/Layout/pages/home/widgets/movie_card.dart';
 
-import '../../../core/apis/models/movie_response.dart';
-import '../manager/layout_cubit.dart';
-import '../manager/layout_state.dart';
+import '../../../../core/apis/models/movie_response.dart';
+import '../../manager/layout_cubit.dart';
+import '../../manager/layout_state.dart';
 
 class Search extends StatefulWidget {
   const Search({super.key});

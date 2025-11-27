@@ -10,9 +10,9 @@ import '../../../core/apis/models/movie_details.dart';
 
 import '../../../core/apis/models/movie_response.dart';
 import '../pages/Profile/profile.dart';
-import '../pages/browse.dart';
+import '../pages/browse/browse.dart';
 import '../pages/home/home_screens/home.dart';
-import '../pages/search.dart';
+import '../pages/search/search.dart';
 import 'layout_state.dart';
 
 class LayoutCubit extends Cubit<LayoutState> {
@@ -26,9 +26,11 @@ class LayoutCubit extends Cubit<LayoutState> {
   List<Widget> screens = [Home(), Search(), Browse(), Profile()];
   List<Movies> movies = [];
   List<Movies> similar = [];
+  List<Movies> filteredMovies = [];
   Set<String> genres = {};
-  List<Movies>searched=[];
+  List<Movies>searched = [];
   Movie? movieDetails;
+  String? selectedGenre;
 
 
   int navIndex = 0;
@@ -118,6 +120,7 @@ class LayoutCubit extends Cubit<LayoutState> {
       emit(GetMoviesGenresErrorState());
       print(e);
     }
+    print("getMoviesGenres");
   }
 
   void onCarouselChanged(int index) {
@@ -170,7 +173,20 @@ class LayoutCubit extends Cubit<LayoutState> {
     }
   }
 
+  void onTapBar(int index){
+    selectedGenre = genres.elementAt(index);
+    getFilteredMovies();
+    emit(OnTapBarChange());
+    print("onTapBar");
+  }
 
+  void getFilteredMovies(){
+     filteredMovies = movies
+        .where((m) => m.genres!.contains(selectedGenre))
+        .toList();
+     emit(GetFilteredMovies());
+    print("getFilteredMovies");
+  }
 
 
 }

@@ -23,12 +23,15 @@ class CastCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          CachedNetworkImage(
-            imageUrl: image ?? '',
-            placeholder: (context, url) =>
-                CircularProgressIndicator(color: context.appColorTheme.primary),
-            errorWidget: (context, url, error) =>
-                Image.asset('assets/images/unkown.png', width: 100),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: CachedNetworkImage(
+              imageUrl: image ?? '',
+              placeholder: (context, url) =>
+                  CircularProgressIndicator(color: context.appColorTheme.primary),
+              errorWidget: (context, url, error) =>
+                  Image.asset('assets/images/unkown.png', width: 100),
+            ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
