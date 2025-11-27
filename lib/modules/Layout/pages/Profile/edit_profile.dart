@@ -1,204 +1,266 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie/core/Dialog/app_dialogs.dart';
+import 'package:movie/core/constants/profile_avatar.dart';
 import 'package:movie/core/theme/app_colors.dart';
-import 'package:movie/core/theme/app_theme.dart';
-import 'package:provider/provider.dart';
-
 import '../../../../core/routes/app_routes_name.dart';
 import '../../../../core/widgets/custom_btn.dart';
-import 'manager/profile_provider.dart';
+import '../../../layout/manager/layout_cubit.dart';
+import '../../../layout/manager/layout_state.dart';
+import '../../manager/layout_state.dart'
+    hide
+        LayoutState,
+        UpdateProfileErrorState,
+        UpdateProfileSuccessState,
+        GetProfileLoadingState,
+        UpdateProfileLoadingState;
 
-class EditProfile extends StatelessWidget {
+class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<EditProfile> createState() => _EditProfileState();
+}
+
+class _EditProfileState extends State<EditProfile> {
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  String? selectedAvatarUrl;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedAvatarUrl = FirebaseAuth.instance.currentUser?.photoURL;
+  }
+
+  void _changeAvatar(String newUrl) async {
     final user = FirebaseAuth.instance.currentUser;
-    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (user == null) return;
+
+    setState(() => selectedAvatarUrl = newUrl);
+
+    await user.updatePhotoURL(newUrl);
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .update({'avatar': newUrl});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final LayoutCubit cubit = BlocProvider.of<LayoutCubit>(context);
+    cubit.getProfile();
 
     return Scaffold(
-      appBar: AppBar(
-          title: Text("Edit Profile")),
-      body: Center(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 37, horizontal: 16),
-              child: ChangeNotifierProvider(
-                create: (context) => ProfileProvider(),
-                child: Consumer<ProfileProvider>(
-                  builder: (BuildContext context, profileProvider, child) {
-                    return Form(
-                      key: profileProvider.ProfileFormKey,
-                      child: Column(
-                        spacing: 50,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            radius: 90,
-                            backgroundImage:
-                                (FirebaseAuth.instance.currentUser?.photoURL !=
-                                        null &&
-                                    FirebaseAuth
-                                        .instance
-                                        .currentUser!
-                                        .photoURL!
-                                        .isNotEmpty)
-                                ? AssetImage(
-                                    FirebaseAuth.instance.currentUser!.photoURL!,
-                                  )
-                                : const AssetImage("assets/avatars/av1.png"),
-                          ),
-                          Column(
-                            spacing: 20,
-                            children: [
-                              TextFormField(
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return "Please Enter Your Name";
-                                  }
-                                  return null;
-                                },
-                                onTapOutside: (event) =>
-                                    FocusManager.instance.primaryFocus?.unfocus(),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                ),
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(
-                                    Icons.person_2_outlined,
-                                    color: Colors.white,
-                                  ),
-                                  hintText: user?.displayName ?? "User",
-                                ),
-                             controller: profileProvider.nameController,
-                              ),
-                              TextFormField(
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return "Please Enter Your Phone";
-                                  }
-                                  return null;
-                                },
+      appBar: AppBar(title: const Text("Edit Profile")),
+      body: BlocConsumer<LayoutCubit, LayoutState>(
+        listener: (context, state) {
+          if (state is UpdateProfileSuccessState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Profile Updated Successfully")),
+            );
+          }
+          if (state is UpdateProfileErrorState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Failed to update profile")),
+            );
+          }
+        },
+        builder: (context, state) {
+          final data = cubit.profileData ?? {};
+          nameController.text =
+              data["name"] ?? FirebaseAuth.instance.currentUser?.displayName ?? "";
+          phoneController.text = data["phone"] ?? "";
 
-                                onTapOutside: (event) =>
-                                    FocusManager.instance.primaryFocus?.unfocus(),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    // Avatar
+                    InkWell(
+                      customBorder: CircleBorder(),
+                      onTap: () {
+                        showModalBottomSheet(
+                          backgroundColor: AppColors.secondaryColor,
+                          context: context,
+                          builder: (context) {
+                            return Padding(
+                              padding: const EdgeInsets.all(19.0),
+                              child: GridView.builder(
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  childAspectRatio: 0.9,
+                                  mainAxisSpacing: 19,
+                                  crossAxisSpacing: 18,
                                 ),
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(
-                                    Icons.phone_outlined,
-                                    color: Colors.white,
-                                  ),
-                                  hintText: "",
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          Column(
-                            spacing: 20,
-                            children: [
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  minimumSize: WidgetStatePropertyAll(
-                                    Size(
-                                      MediaQuery.of(context).size.width,
-                                      55, // fixed height
+                                itemCount: 9,
+                                itemBuilder: (context, index) {
+                                  final avatar = AvatarData.Avtar[index].images;
+                                  return InkWell(
+                                    borderRadius: BorderRadius.circular(16),
+                                    onTap: () => _changeAvatar(avatar),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        borderRadius: BorderRadius.circular(16),
+                                        border: Border.all(
+                                          width: 2,
+                                          color: AppColors.primaryColor,
+                                        ),
+                                      ),
+                                      height: 105,
+                                      width: 108,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(9.0),
+                                        child: Image.asset(avatar),
+                                      ),
                                     ),
-                                  ),
-                                  shape: WidgetStatePropertyAll(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                  ),
-                                  backgroundColor: WidgetStatePropertyAll(
-                                    Colors.redAccent,
-                                  ),
-                                ),
-                                onPressed: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    builder: (context) {
-                                      bool localLoading = false; // local state
-                                      return StatefulBuilder(
-                                        builder: (context, setState) {
-                                          return Container(
-                                            padding: EdgeInsets.all(20),
-                                            height: 300,
-                                            child: Column(
-                                              spacing: 10,
-                                              children: [
-                                                Text('Confirm Delete'),
-                                                SizedBox(height: 20),
-                                                CustomBut(
-                                                  text: 'Confirm',
-                                                  isLoading: localLoading,
-                                                  onPressed: () async {
-                                                    setState(
-                                                      () => localLoading = true,
-                                                    ); // start spinner
-                                                    await profileProvider
-                                                        .deleteAccount(context);
-                                                    setState(
-                                                      () => localLoading = false,
-                                                    );
-                                                    Navigator.pushReplacementNamed(
-                                                      context,
-                                                      RouteName.Login,
-                                                    );
-                                                  },
-                                                ),
-
-                                                Text(
-                                                  '*in case of failure re-Login*',
-                                                  style: TextStyle(
-                                                    color: Colors.redAccent,
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
                                   );
                                 },
-                                child: Text(
-                                  "Delete",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: AppColors.secondaryColor,
-                                  ),
-                                ),
                               ),
-
-                              CustomBut(
-                                onPressed: () {
-                                  profileProvider.UpdateName(context);
-                                },
-                                text: "Update Account",
-                                isLoading: false,
-                              ),
-                            ],
-                          ),
-                        ],
+                            );
+                          },
+                        );
+                      },
+                      child: CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        radius: 80,
+                        backgroundImage: selectedAvatarUrl != null
+                            ? (selectedAvatarUrl!.startsWith('http')
+                            ? NetworkImage(selectedAvatarUrl!)
+                            : AssetImage(selectedAvatarUrl!) as ImageProvider)
+                            : const AssetImage("assets/avatars/av1.png"),
                       ),
-                    );
-                  },
+                    ),
+                    const SizedBox(height: 20),
+
+                    Column(
+                      spacing: 20,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 56,
+                          child: TextFormField(
+                            style: TextStyle(fontSize: 18),
+
+                            controller: nameController,
+                            validator: (value) => value == null || value.isEmpty ? "Enter your name" : null,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.person_outline, color: AppColors.primaryColor),
+                              hintText: "Name",
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 56,
+                          child: TextFormField(
+                            style: TextStyle(fontSize: 18),
+                            controller: phoneController,
+                            validator: (value) => value == null || value.isEmpty ? "Enter your phone" : null,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.phone_outlined, color: AppColors.primaryColor),
+                              hintText: "Phone",
+                            ),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            cubit.resetPassword();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Please check your email to reset password")),
+                            );
+                          },
+                          child: const Text("Reset Password", style: TextStyle(fontSize: 18)),
+                        ),
+
+
+                      ],
+                    ),
+
+                    Column(
+                      spacing: 20,
+
+                      children: [
+                        CustomBut(
+                          text: "Update Profile",
+                          isLoading: state is UpdateProfileLoadingState,
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              cubit.updateProfile({
+                                "name": nameController.text,
+                                "phone": phoneController.text,
+                                "avatar": selectedAvatarUrl,
+                              });
+                            }
+                          },
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            )),
+                            minimumSize: WidgetStatePropertyAll(
+                              Size(MediaQuery.of(context).size.width, 55),
+                            ),
+                            backgroundColor: const WidgetStatePropertyAll(Colors.redAccent),
+                          ),
+                          onPressed: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                bool loading = false;
+                                return StatefulBuilder(
+                                  builder: (context, setState) {
+                                    return Container(
+                                      padding: const EdgeInsets.all(20),
+                                      height: 250,
+                                      child: Column(
+                                        children: [
+                                          const Text("Confirm Delete", style: TextStyle(fontSize: 20)),
+                                          const SizedBox(height: 16),
+                                          CustomBut(
+                                            text: "Confirm",
+                                            isLoading: loading,
+                                            onPressed: () async {
+                                              setState(() => loading = true);
+                                              await cubit.deleteUser();
+                                              Navigator.pushReplacementNamed(context, RouteName.Login);
+                                            },
+                                          ),
+                                          const SizedBox(height: 16),
+                                          const Text(
+                                            "*Re-login if account deletion fails*",
+                                            style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            );
+                          },
+                          child: Text("Delete Account", style: TextStyle(fontSize: 18, color: AppColors.secondaryColor)),
+                        ),
+
+                      ],
+                    ),
+
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
 }
+

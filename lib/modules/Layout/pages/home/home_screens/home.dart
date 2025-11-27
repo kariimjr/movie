@@ -28,6 +28,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
     cubit = context.watch<LayoutCubit>();
     return CustomScrollView(
       slivers: [

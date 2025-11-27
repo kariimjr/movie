@@ -115,7 +115,9 @@ class _MovieDetailsState extends State<MovieDetails> {
                                     ],
                                   ),
                                   InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+
+                                    },
                                     child: Image.asset(
                                       'assets/images/play.png',
                                       height: 64,
@@ -154,7 +156,9 @@ class _MovieDetailsState extends State<MovieDetails> {
                                           ),
                                           backgroundColor: Color(0xffE82626),
                                         ),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          cubit.addToHistory(movie!);
+                                        },
                                         child: Center(
                                           child: Text(
                                             'Watch',

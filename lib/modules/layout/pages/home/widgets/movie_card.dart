@@ -17,12 +17,13 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      splashFactory: NoSplash.splashFactory,
       onTap: (){
         Navigator.pushNamed(context, RouteName.MovieDetails, arguments: movie);
       },
       child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
         clipBehavior: Clip.antiAlias,
-        borderRadius: BorderRadius.circular(20),
         child: Stack(
           children: [
             CachedNetworkImage(

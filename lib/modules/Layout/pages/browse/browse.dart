@@ -40,11 +40,15 @@ class _BrowseState extends State<Browse> {
       child: SingleChildScrollView(
         child: BlocBuilder<LayoutCubit, LayoutState>(
           builder: (BuildContext context, LayoutState state) {
-            if(state is GetMoviesGenresLoadingState){
-              return Center(child: CircularProgressIndicator(color: context.appColorTheme.primary,));
-            }else if(state is GetMoviesGenresErrorState){
-              return Icon(Icons.error, color: context.appColorTheme.primary,);
-            }else{
+            if (state is GetMoviesGenresLoadingState) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: context.appColorTheme.primary,
+                ),
+              );
+            } else if (state is GetMoviesGenresErrorState) {
+              return Icon(Icons.error, color: context.appColorTheme.primary);
+            } else {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
@@ -52,6 +56,7 @@ class _BrowseState extends State<Browse> {
                     DefaultTabController(
                       length: cubit.genres.length,
                       child: TabBar(
+                        splashFactory: NoSplash.splashFactory,
                         onTap: cubit.onTapBar,
                         isScrollable: true,
                         dividerColor: Colors.transparent,
@@ -62,9 +67,14 @@ class _BrowseState extends State<Browse> {
                         labelPadding: EdgeInsets.all(8),
                         tabs: cubit.genres.map((e) {
                           return Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 5,
+                            ),
                             decoration: BoxDecoration(
-                              border: Border.all(color: context.appColorTheme.primary),
+                              border: Border.all(
+                                color: context.appColorTheme.primary,
+                              ),
                               borderRadius: BorderRadius.circular(16),
                               color: cubit.selectedGenre == e
                                   ? context.appColorTheme.primary
@@ -93,10 +103,8 @@ class _BrowseState extends State<Browse> {
                         crossAxisSpacing: 12,
                       ),
                       itemBuilder: (context, index) {
-                        return ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-
-                            child: MovieCard(movie: cubit.filteredMovies[index])
+                        return MovieCard(
+                          movie: cubit.filteredMovies[index],
                         );
                       },
                     ),
