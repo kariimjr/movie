@@ -49,10 +49,22 @@ class _HomeState extends State<Home> {
                       children: [
                         Positioned.fill(
                           child: CachedNetworkImage(
-                            imageUrl: cubit
-                                .movies[cubit.currentIndex]
-                                .largeCoverImage!,
+                            imageUrl:
+                                cubit
+                                    .movies[cubit.currentIndex]
+                                    .largeCoverImage ??
+                                '',
                             fit: BoxFit.cover,
+                            placeholder: (context, url) =>
+                                Center(
+                                  child: CircularProgressIndicator(
+                                    color: context.appColorTheme.primary,
+                                  ),
+                                ),
+                            errorWidget: (context, url, error) => Image.asset(
+                              'assets/images/not_found_image.png',
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                         Positioned.fill(
@@ -81,8 +93,12 @@ class _HomeState extends State<Home> {
                                   itemBuilder: (context, index, realIdx) {
                                     final movie = cubit.movies[index];
                                     return InkWell(
-                                      onTap: (){
-                                        Navigator.pushNamed(context, RouteName.MovieDetails, arguments: movie);
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          RouteName.MovieDetails,
+                                          arguments: movie,
+                                        );
                                       },
                                       child: MovieCard(movie: movie),
                                     );

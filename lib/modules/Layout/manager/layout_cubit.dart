@@ -1,15 +1,17 @@
+
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/apis/api_manager.dart';
-import '../../../../core/apis/models/movie_response.dart';
+import '../../../core/apis/api_manager.dart';
+import '../../../core/apis/models/movie_details.dart';
+
+import '../../../core/apis/models/movie_response.dart';
 import '../pages/Profile/profile.dart';
 import '../pages/browse.dart';
 import '../pages/home/home_screens/home.dart';
-
 import '../pages/search.dart';
 import 'layout_state.dart';
 
@@ -26,6 +28,7 @@ class LayoutCubit extends Cubit<LayoutState> {
   List<Movies> similar = [];
   Set<String> genres = {};
   List<Movies>searched=[];
+  Movie? movieDetails;
 
 
   int navIndex = 0;
@@ -128,7 +131,7 @@ class LayoutCubit extends Cubit<LayoutState> {
     similar.clear();
 
     for (var e in movies) {
-      if (e == movie) continue;
+      if (e.id == movie.id) continue;
 
 
       bool hasSimilarGenre = e.genres!.any((g) => movie.genres!.contains(g));
@@ -137,7 +140,6 @@ class LayoutCubit extends Cubit<LayoutState> {
         similar.add(e);
       }
     }
-
     emit(GetSimilarSuccess()); // notify UI
   }
 
@@ -153,6 +155,19 @@ class LayoutCubit extends Cubit<LayoutState> {
     }).toList();
 
     emit(SearchMovie());
+  }
+
+  Future<void> getMovieDetails(num? movieId) async{
+    emit(GetMovieDetailsLoadingState());
+    try{
+      final data  = await _apiManager.getMovieDetails(movieId);
+      movieDetails = data;
+
+      emit(GetMovieDetailsSuccessState());
+    }catch(e, _){
+      emit(GetMovieDetailsErrorState());
+      print(e);
+    }
   }
 
 

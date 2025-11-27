@@ -25,9 +25,10 @@ class MovieCard extends StatelessWidget {
         child: Stack(
           children: [
             CachedNetworkImage(
-              imageUrl: movie.mediumCoverImage!,
+              imageUrl: movie.mediumCoverImage ?? '',
               fit: BoxFit.cover,
-
+              placeholder: (context, url) => CircularProgressIndicator(color: context.appColorTheme.primary,),
+              errorWidget: (context, url, error) => Image.asset('assets/images/not_found_image.png', fit: BoxFit.cover,),
             ),
             Padding(
               padding: const EdgeInsets.only(

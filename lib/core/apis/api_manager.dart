@@ -1,9 +1,11 @@
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:movie/core/apis/models/movie_response.dart';
-import 'package:movie/core/routes/app_routes_name.dart';
 
 import '../../main.dart';
+import '../routes/app_routes_name.dart';
+import 'models/movie_details.dart';
+import 'models/movie_response.dart';
 
 class ApiManager {
   static final _dio = Dio(
@@ -42,6 +44,27 @@ class ApiManager {
       rethrow;
     }
   }
+
+  Future<Movie> getMovieDetails(num? movieId) async {
+    try {
+      var response = await _dio.get(
+        "movie_details.json?movie_id=$movieId&with_images=true&with_cast=true",
+      );
+
+      if (response.statusCode == 200) {
+        var data = response.data["data"]["movie"];
+        return Movie.fromJson(data);
+      } else {
+        throw response.data;
+      }
+    } catch (e, s) {
+      print(e);
+      print(s);
+      rethrow;
+    }
+  }
+
+
   Future<Set<String>> getMoviesGenres() async {
     try {
       var response = await _dio.get("list_movies.json");

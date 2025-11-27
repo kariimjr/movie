@@ -20,3 +20,7 @@ class SearchMovie extends LayoutState{}
 class GetMoviesGenresLoadingState extends LayoutState{}
 class GetMoviesGenresSuccessState extends LayoutState{}
 class GetMoviesGenresErrorState extends LayoutState{}
+
+class GetMovieDetailsErrorState extends LayoutState{}
+class GetMovieDetailsSuccessState extends LayoutState{}
+class GetMovieDetailsLoadingState extends LayoutState{}
