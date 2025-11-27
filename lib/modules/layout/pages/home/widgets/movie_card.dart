@@ -21,6 +21,7 @@ class MovieCard extends StatelessWidget {
         Navigator.pushNamed(context, RouteName.MovieDetails, arguments: movie);
       },
       child: ClipRRect(
+        clipBehavior: Clip.antiAlias,
         borderRadius: BorderRadius.circular(20),
         child: Stack(
           children: [
